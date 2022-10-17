@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+        <item
+            android:id="@+id/ic_mapexplore"
+            android:icon="@drawable/ic_mapexplore"
+            android:title="Map"/>
+
+    <item
+            android:id="@+id/ic_searchpref"
+            android:icon="@drawable/ic_searchpref"
+            android:title="Info"/>
+
+    <item
+            android:id="@+id/ic_accountprofile"
+            android:icon="@drawable/ic_accountprofile"
+            android:title="Profile"/>
+
+
+
+</menu>
