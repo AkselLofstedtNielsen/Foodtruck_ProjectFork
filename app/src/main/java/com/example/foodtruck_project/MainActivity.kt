@@ -1,6 +1,7 @@
 package com.example.foodtruck_project
 
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -27,7 +28,11 @@ class MainActivity : AppCompatActivity() {
 
         navigationMenu.setOnItemReselectedListener() {
             when(it.itemId) {
-                R.id.ic_mapexplore -> replaceFragment(mapexploreFragment)
+                R.id.ic_mapexplore -> {
+                    val intent = Intent(this,MapsActivity::class.java)
+                    startActivity(intent)
+                }
+
                 R.id.ic_searchpref -> replaceFragment(searchprefFragment)
                 R.id.ic_accountprofile -> replaceFragment(AccProfileFragment)
             }
