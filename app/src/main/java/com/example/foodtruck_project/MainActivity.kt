@@ -1,35 +1,51 @@
 package com.example.foodtruck_project
 
+
+
 import android.content.Intent
-import android.media.Image
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.TextView
-import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.fragment.app.Fragment
+import com.example.foodtruck_project.fragments.AccProfileFragment
+import com.example.foodtruck_project.fragments.MapexploreFragment
+import com.example.foodtruck_project.fragments.SearchprefFragment
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
-
-lateinit var img1: Image
 
 class MainActivity : AppCompatActivity() {
+
+    private val mapexploreFragment = MapexploreFragment()
+    private val searchprefFragment = SearchprefFragment()
+    private val AccProfileFragment = AccProfileFragment()
+    lateinit var navigationMenu : BottomNavigationView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        var startPage = findViewById<ConstraintLayout>(R.id.startPage)
+        navigationMenu = findViewById(R.id.bottom_navigation)
 
-        //här skapas intentet av kartsidan som jonas ska göra
-        //val intent = Intent(this, MapActivity::class.java)
+        replaceFragment(mapexploreFragment)
 
-        //ska launcha kartsidan
-        startPage.setOnClickListener {
-          //  startActivity(intent)
+        navigationMenu.setOnItemReselectedListener() {
+            when(it.itemId) {
+                R.id.ic_mapexplore -> {
+                    val intent = Intent(this,MapsActivity::class.java)
+                    startActivity(intent)
+                }
+
+                R.id.ic_searchpref -> replaceFragment(searchprefFragment)
+                R.id.ic_accountprofile -> replaceFragment(AccProfileFragment)
+            }
+                true
         }
 
-        //Elin kommentar
+    }
+
+
+    private fun replaceFragment(fragment: Fragment) {
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.replace(R.id.fragment_container,fragment)
+        transaction.commit()
     }
 }
-
-// filip kommentar
-
-//hej cilia
