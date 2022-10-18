@@ -33,7 +33,10 @@ class MainActivity : AppCompatActivity() {
                     startActivity(intent)
                 }
 
-                R.id.ic_searchpref -> replaceFragment(searchprefFragment)
+                R.id.ic_searchpref -> {
+                    val intent = Intent(this,CategoriesActivity::class.java)
+                    startActivity(intent)
+                }
                 R.id.ic_accountprofile -> replaceFragment(AccProfileFragment)
             }
                 true
