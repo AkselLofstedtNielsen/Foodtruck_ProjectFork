@@ -1,6 +1,7 @@
 package com.example.foodtruck_project
 
 
+
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -10,13 +11,13 @@ import com.example.foodtruck_project.fragments.MapexploreFragment
 import com.example.foodtruck_project.fragments.SearchprefFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
+
 class MainActivity : AppCompatActivity() {
 
     private val mapexploreFragment = MapexploreFragment()
     private val searchprefFragment = SearchprefFragment()
     private val AccProfileFragment = AccProfileFragment()
     lateinit var navigationMenu : BottomNavigationView
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,8 +43,8 @@ class MainActivity : AppCompatActivity() {
                 true
         }
 
-
     }
+
 
     private fun replaceFragment(fragment: Fragment) {
         val transaction = supportFragmentManager.beginTransaction()
