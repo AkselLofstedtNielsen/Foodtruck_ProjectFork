@@ -66,6 +66,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION),permissionCode)
             return
         }
+
+
 /*            val getLocation = fusedLocationProviderClient.lastLocation.addOnSuccessListener {
 
                 location ->
@@ -114,7 +116,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
         mMap = googleMap
 
-        val stockholm = LatLng(59.3, 18.0)
+        //koordinater satta till ithöskolans position,
+        val stockholm = LatLng(59.31118, 18.03002)
         mMap.addMarker(MarkerOptions().position(stockholm).title("Marker in Stockholm"))
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(stockholm,15f))
 /*
