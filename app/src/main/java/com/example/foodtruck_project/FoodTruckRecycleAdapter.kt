@@ -1,11 +1,14 @@
 package com.example.foodtruck_project
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 
 class FoodTruckRecycleAdapter(val context: Context, val foodtrucks: List<FoodTruck>) :
@@ -25,9 +28,22 @@ class FoodTruckRecycleAdapter(val context: Context, val foodtrucks: List<FoodTru
         holder.nameView.text = foodTruck.name
         holder.openHoursView.text = foodTruck.hours
 
-        if (foodTruck.image != null) {
-            holder.foodTruckImageView.setImageResource(foodTruck.image!!)
+        if (foodTruck.truckImage != null) {
+            holder.foodTruckImageView.setImageResource(foodTruck.truckImage!!)
         }
+
+        var menuImage = foodTruck.menuImage
+        holder.menuButton.setOnClickListener {
+            val intent = Intent(context, FoodTruckMenuActivity::class.java)
+            intent.putExtra("menuImage", menuImage)
+            context.startActivity(intent)
+        }
+
+        holder.mapButton.setOnClickListener {
+            val intent = Intent(context, MapsActivity::class.java)
+            context.startActivity(intent)
+        }
+
     }
 
     override fun getItemCount(): Int {
@@ -38,5 +54,9 @@ class FoodTruckRecycleAdapter(val context: Context, val foodtrucks: List<FoodTru
         var nameView = itemView.findViewById<TextView>(R.id.nameTextView)
         var openHoursView = itemView.findViewById<TextView>(R.id.openHoursTextView)
         var foodTruckImageView = itemView.findViewById<ImageView>(R.id.foodTruckImageView)
+        var menuButton = itemView.findViewById<Button>(R.id.menuButton)
+        var mapButton = itemView.findViewById<Button>(R.id.mapButton)
+
+
     }
 }

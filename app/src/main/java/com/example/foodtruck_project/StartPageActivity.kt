@@ -12,8 +12,8 @@ class StartPageActivity : AppCompatActivity() {
 
         val startPage = findViewById<ConstraintLayout>(R.id.startPage)
 
-        startPage.setOnClickListener{
-            val intent = Intent(this, CategoriesActivity::class.java)
+        startPage.setOnClickListener {
+            val intent = Intent(this, FoodTruckListActivity::class.java)
             startActivity(intent)
         }
     }
