@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.example.foodtruck_project.fragments.AccProfileFragment
+import com.example.foodtruck_project.fragments.GoogleMapsFragment
 import com.example.foodtruck_project.fragments.MapexploreFragment
 import com.example.foodtruck_project.fragments.SearchprefFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -18,6 +19,7 @@ class MainActivity : AppCompatActivity() {
     private val searchprefFragment = SearchprefFragment()
     private val AccProfileFragment = AccProfileFragment()
     lateinit var navigationMenu : BottomNavigationView
+    private val GoogleMapsFragment = GoogleMapsFragment()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,14 +27,13 @@ class MainActivity : AppCompatActivity() {
 
         navigationMenu = findViewById(R.id.bottom_navigation)
 
-        replaceFragment(mapexploreFragment)
+        //replaceFragment(mapexploreFragment)
+        replaceFragment(GoogleMapsFragment)
 
-        navigationMenu.setOnItemReselectedListener() {
+        navigationMenu.setOnItemSelectedListener {
             when(it.itemId) {
-                R.id.ic_mapexplore -> {
-                    val intent = Intent(this,MapsActivity::class.java)
-                    startActivity(intent)
-                }
+                R.id.ic_mapexplore ->
+                    replaceFragment(GoogleMapsFragment)
 
                 R.id.ic_searchpref -> {
                     val intent = Intent(this,CategoriesActivity::class.java)
