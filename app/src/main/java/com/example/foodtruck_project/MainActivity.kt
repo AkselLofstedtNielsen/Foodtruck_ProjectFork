@@ -1,7 +1,6 @@
 package com.example.foodtruck_project
 
 
-
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -19,7 +18,7 @@ class MainActivity : AppCompatActivity() {
     private val mapexploreFragment = MapexploreFragment()
     private val searchprefFragment = SearchprefFragment()
     private val AccProfileFragment = AccProfileFragment()
-    lateinit var navigationMenu : BottomNavigationView
+    lateinit var navigationMenu: BottomNavigationView
 
     private val GoogleMapsFragment = GoogleMapsFragment()
 
@@ -30,26 +29,34 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        val openMaps = intent.getBooleanExtra("openMaps", false)
+        if (openMaps) {
+            replaceFragment(GoogleMapsFragment)
+        }
+
+
+
+
         navigationMenu = findViewById(R.id.bottom_navigation)
 
 
         replaceFragment(GoogleMapsFragment)
 
         navigationMenu.setOnItemSelectedListener {
-            when(it.itemId) {
+            when (it.itemId) {
                 R.id.ic_mapexplore ->
                     replaceFragment(GoogleMapsFragment)
 
                 R.id.ic_searchpref -> {
-                    val intent = Intent(this,CategoriesActivity::class.java)
+                    val intent = Intent(this, CategoriesActivity::class.java)
                     startActivity(intent)
                 }
                 R.id.ic_accountprofile -> {
-                    val intent = Intent(this, SignUpActivity:: class.java)
+                    val intent = Intent(this, SignUpActivity::class.java)
                     startActivity(intent)
                 }
             }
-                true
+            true
         }
 
     }
@@ -57,7 +64,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun replaceFragment(fragment: Fragment) {
         val transaction = supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.fragment_container,fragment)
+        transaction.replace(R.id.fragment_container, fragment)
         transaction.commit()
     }
 
