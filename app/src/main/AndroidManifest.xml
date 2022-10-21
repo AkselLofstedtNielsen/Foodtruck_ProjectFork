@@ -40,12 +40,8 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyDWvEkA9jf9f4kTa1Q27tlazwPvAJly8kk" />
 
-        <activity
-            android:name=".FoodTruckListActivity"
-            android:exported="false" />
-        <activity
-            android:name=".MainActivity"
-            android:exported="false" />
+
+
 
         <activity
             android:name=".CategoriesActivity"
@@ -65,6 +61,11 @@
         <activity
             android:name=".SignInActivity"
             android:exported="false" />
+
+        <activity
+            android:name=".Item"
+            android:exported="false" />
+
     </application>
 
 </manifest>
