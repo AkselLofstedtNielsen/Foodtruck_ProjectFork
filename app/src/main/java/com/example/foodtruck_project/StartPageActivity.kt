@@ -12,6 +12,7 @@ class StartPageActivity : AppCompatActivity() {
 
         val startPage = findViewById<ConstraintLayout>(R.id.startPage)
 
+
         startPage.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)

@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.foodtruck_project.fragments.AccProfileFragment
+import com.example.foodtruck_project.fragments.GoogleMapsFragment
 import com.example.foodtruck_project.fragments.MapexploreFragment
 import com.example.foodtruck_project.fragments.SearchprefFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -16,6 +17,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 class CategoriesActivity : AppCompatActivity() {
     lateinit var dataManager: DataManager
     lateinit var navigationMenu: BottomNavigationView
+    lateinit var GoogleMapsFragment : GoogleMapsFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -32,14 +34,20 @@ class CategoriesActivity : AppCompatActivity() {
 
         navigationMenu = findViewById(R.id.bottom_navigation)
 
-        navigationMenu.setOnItemReselectedListener() {
+        navigationMenu.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.ic_mapexplore -> {
-                    val intent = Intent(this, MapsActivity::class.java)
-                    startActivity(intent)
+                replaceFragment(GoogleMapsFragment)
                 }
             }
             true
         }
     }
+
+    private fun replaceFragment(fragment: Fragment) {
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.replace(R.id.fragment_container,fragment)
+        transaction.commit()
+    }
+
 }
