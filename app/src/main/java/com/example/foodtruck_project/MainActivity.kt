@@ -5,6 +5,7 @@ package com.example.foodtruck_project
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Button
 import androidx.fragment.app.Fragment
 import com.example.foodtruck_project.fragments.AccProfileFragment
 import com.example.foodtruck_project.fragments.GoogleMapsFragment
@@ -22,7 +23,7 @@ class MainActivity : AppCompatActivity() {
 
     private val GoogleMapsFragment = GoogleMapsFragment()
 
-    lateinit var button678 : Button
+    //lateinit var button678 : Button
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,13 +31,13 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
 
-        button678 = findViewById(R.id.button678)
+        //button678 = findViewById(R.id.button678)
 
 
-        button678.setOnClickListener {
+      /*  button678.setOnClickListener {
             val intent = Intent(this, SignUpActivity:: class.java)
             startActivity(intent)
-        }
+        }*/
 
 
         navigationMenu = findViewById(R.id.bottom_navigation)
@@ -53,7 +54,10 @@ class MainActivity : AppCompatActivity() {
                     val intent = Intent(this,CategoriesActivity::class.java)
                     startActivity(intent)
                 }
-                R.id.ic_accountprofile -> replaceFragment(AccProfileFragment)
+                R.id.ic_accountprofile -> {
+                    val intent = Intent(this, SignUpActivity:: class.java)
+                    startActivity(intent)
+                }
             }
                 true
         }
