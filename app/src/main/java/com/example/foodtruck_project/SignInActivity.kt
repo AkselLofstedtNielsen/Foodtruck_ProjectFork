@@ -4,7 +4,10 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import com.example.foodtruck_project.databinding.ActivitySignInBinding
+import com.example.foodtruck_project.fragments.GoogleMapsFragment
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 
 class SignInActivity : AppCompatActivity() {
@@ -12,7 +15,8 @@ class SignInActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySignInBinding
     private lateinit var firebaseAuth: FirebaseAuth
-
+    lateinit var navigationMenu : BottomNavigationView
+    private val GoogleMapsFragment = GoogleMapsFragment()
 
 
 
@@ -60,8 +64,31 @@ class SignInActivity : AppCompatActivity() {
 
 
 
+        navigationMenu = findViewById(R.id.bottom_navigation)
+
+        navigationMenu.setOnItemSelectedListener {
+            when(it.itemId) {
+                R.id.ic_mapexplore ->
+                    replaceFragment(GoogleMapsFragment)
+
+                R.id.ic_searchpref -> {
+                    val intent = Intent(this,CategoriesActivity::class.java)
+                    startActivity(intent)
+                }
+                R.id.ic_accountprofile -> {
+                    val intent = Intent(this, SignUpActivity:: class.java)
+                    startActivity(intent)
+                }
+            }
+            true
+        }
+
     }
 
-
+    private fun replaceFragment(fragment: Fragment) {
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.replace(R.id.fragment_container,fragment)
+        transaction.commit()
+    }
 
 }

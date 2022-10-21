@@ -4,7 +4,10 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import com.example.foodtruck_project.databinding.ActivitySignUpBinding
+import com.example.foodtruck_project.fragments.GoogleMapsFragment
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 
 class SignUpActivity : AppCompatActivity() {
@@ -14,11 +17,11 @@ class SignUpActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySignUpBinding
     private lateinit var firebaseAuth: FirebaseAuth
-
+    lateinit var navigationMenu : BottomNavigationView
+    private val GoogleMapsFragment = GoogleMapsFragment()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
 
         binding = ActivitySignUpBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -57,16 +60,32 @@ class SignUpActivity : AppCompatActivity() {
                 Toast.makeText(this, "there are empty fields", Toast.LENGTH_SHORT).show()
             }
 
-
-
-
-
         }
 
 
+        navigationMenu = findViewById(R.id.bottom_navigation2)
 
+        navigationMenu.setOnItemSelectedListener {
+            when(it.itemId) {
+                R.id.ic_mapexplore ->
+                    replaceFragment(GoogleMapsFragment)
 
+                R.id.ic_searchpref -> {
+                    val intent = Intent(this,CategoriesActivity::class.java)
+                    startActivity(intent)
+                }
+                R.id.ic_accountprofile -> {
+                    val intent = Intent(this, SignUpActivity:: class.java)
+                    startActivity(intent)
+                }
+            }
+            true
+        }
 
     }
-
+    private fun replaceFragment(fragment: Fragment) {
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.replace(R.id.fragment_container,fragment)
+        transaction.commit()
+    }
 }
