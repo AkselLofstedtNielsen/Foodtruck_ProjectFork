@@ -11,16 +11,15 @@ class FoodTruckMenuActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_food_truck_menu)
 
-
-        var menuImage = intent.getIntExtra("menuImage", 0)
+        val menuImage = intent.getIntExtra("menuImage", 0)
 
         if (menuImage != 0) {
 
-            var menuImageView = findViewById<ImageView>(R.id.menuImageView)
+            val menuImageView = findViewById<ImageView>(R.id.menuImageView)
             menuImageView.setImageResource(menuImage)
         }
 
-        var backButton = findViewById<ImageButton>(R.id.backImageButton)
+        val backButton = findViewById<ImageButton>(R.id.backImageButton)
         backButton.setOnClickListener {
             finish()
         }

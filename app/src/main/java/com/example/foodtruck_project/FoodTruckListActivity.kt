@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.RecyclerView
 
 class FoodTruckListActivity : AppCompatActivity() {
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
