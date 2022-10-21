@@ -16,7 +16,7 @@ class SignInActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySignInBinding
     private lateinit var firebaseAuth: FirebaseAuth
     lateinit var navigationMenu : BottomNavigationView
-    private val GoogleMapsFragment = GoogleMapsFragment()
+    //private val GoogleMapsFragment = GoogleMapsFragment()
 
 
 
@@ -64,13 +64,14 @@ class SignInActivity : AppCompatActivity() {
 
 
 
-        navigationMenu = findViewById(R.id.bottom_navigation)
+        navigationMenu = findViewById(R.id.bottom_navigation3)
 
         navigationMenu.setOnItemSelectedListener {
             when(it.itemId) {
-                R.id.ic_mapexplore ->
-                    replaceFragment(GoogleMapsFragment)
-
+                R.id.ic_mapexplore -> {
+                    val intent = Intent(this, MainActivity::class.java)
+                    startActivity(intent)
+                }
                 R.id.ic_searchpref -> {
                     val intent = Intent(this,CategoriesActivity::class.java)
                     startActivity(intent)
@@ -85,10 +86,10 @@ class SignInActivity : AppCompatActivity() {
 
     }
 
-    private fun replaceFragment(fragment: Fragment) {
+/*    private fun replaceFragment(fragment: Fragment) {
         val transaction = supportFragmentManager.beginTransaction()
         transaction.replace(R.id.fragment_container,fragment)
         transaction.commit()
-    }
+    }*/
 
 }
