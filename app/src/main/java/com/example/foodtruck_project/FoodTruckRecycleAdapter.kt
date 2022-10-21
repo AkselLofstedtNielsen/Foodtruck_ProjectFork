@@ -13,11 +13,10 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.example.foodtruck_project.fragments.GoogleMapsFragment
 
-class FoodTruckRecycleAdapter(val context: Context, val foodtrucks: List<FoodTruck>) :
+class FoodTruckRecycleAdapter(val context: Context, private val foodtrucks: List<FoodTruck>) :
     RecyclerView.Adapter<FoodTruckRecycleAdapter.ViewHolder>() {
 
     val layoutInflater = LayoutInflater.from(context)
-    lateinit var GoogleMapsFragment: GoogleMapsFragment
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val itemView = layoutInflater.inflate(R.layout.foodtruck_item, parent, false)
@@ -33,22 +32,18 @@ class FoodTruckRecycleAdapter(val context: Context, val foodtrucks: List<FoodTru
         if (foodTruck.truckImage != null) {
             holder.foodTruckImageView.setImageResource(foodTruck.truckImage!!)
         }
-
-        var menuImage = foodTruck.menuImage
+        val menuImage = foodTruck.menuImage
         holder.menuButton.setOnClickListener {
             val intent = Intent(context, FoodTruckMenuActivity::class.java)
             intent.putExtra("menuImage", menuImage)
             context.startActivity(intent)
         }
-
-
         holder.mapButton.setOnClickListener {
             val intent = Intent(context, MainActivity::class.java)
             val openMaps = true
             intent.putExtra("openMaps", openMaps)
             context.startActivity(intent)
         }
-
     }
 
     override fun getItemCount(): Int {
@@ -56,13 +51,12 @@ class FoodTruckRecycleAdapter(val context: Context, val foodtrucks: List<FoodTru
     }
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var nameView = itemView.findViewById<TextView>(R.id.nameTextView)
-        var openHoursView = itemView.findViewById<TextView>(R.id.openHoursTextView)
-        var foodTruckImageView = itemView.findViewById<ImageView>(R.id.foodTruckImageView)
-        var menuButton = itemView.findViewById<Button>(R.id.menuButton)
-        var mapButton = itemView.findViewById<Button>(R.id.mapButton)
-
-
+        var nameView: TextView = itemView.findViewById<TextView>(R.id.nameTextView)
+        var openHoursView: TextView = itemView.findViewById<TextView>(R.id.openHoursTextView)
+        var foodTruckImageView: ImageView =
+            itemView.findViewById<ImageView>(R.id.foodTruckImageView)
+        var menuButton: Button = itemView.findViewById<Button>(R.id.menuButton)
+        var mapButton: Button = itemView.findViewById<Button>(R.id.mapButton)
     }
 
 }
