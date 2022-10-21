@@ -35,13 +35,22 @@ class CategoriesActivity : AppCompatActivity() {
         navigationMenu = findViewById(R.id.bottom_navigation)
 
         navigationMenu.setOnItemSelectedListener {
-            when (it.itemId) {
-                R.id.ic_mapexplore -> {
-                replaceFragment(GoogleMapsFragment)
+            when(it.itemId) {
+                R.id.ic_mapexplore ->
+                    replaceFragment(GoogleMapsFragment)
+
+                R.id.ic_searchpref -> {
+                    val intent = Intent(this,CategoriesActivity::class.java)
+                    startActivity(intent)
+                }
+                R.id.ic_accountprofile -> {
+                    val intent = Intent(this, SignUpActivity:: class.java)
+                    startActivity(intent)
                 }
             }
             true
         }
+
     }
 
     private fun replaceFragment(fragment: Fragment) {
