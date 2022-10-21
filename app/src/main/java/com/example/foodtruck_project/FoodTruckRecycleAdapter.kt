@@ -9,13 +9,15 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat.startActivity
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
+import com.example.foodtruck_project.fragments.GoogleMapsFragment
 
 class FoodTruckRecycleAdapter(val context: Context, val foodtrucks: List<FoodTruck>) :
     RecyclerView.Adapter<FoodTruckRecycleAdapter.ViewHolder>() {
 
     val layoutInflater = LayoutInflater.from(context)
-
+    lateinit var GoogleMapsFragment : GoogleMapsFragment
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val itemView = layoutInflater.inflate(R.layout.foodtruck_item, parent, false)
@@ -39,10 +41,11 @@ class FoodTruckRecycleAdapter(val context: Context, val foodtrucks: List<FoodTru
             context.startActivity(intent)
         }
 
-        holder.mapButton.setOnClickListener {
+        // Vad händer här? Jag kommenterade bort koden, den ger felkod. måste lösas?!
+/*        holder.mapButton.setOnClickListener {
             val intent = Intent(context, MapsActivity::class.java)
             context.startActivity(intent)
-        }
+        }*/
 
     }
 
@@ -59,4 +62,5 @@ class FoodTruckRecycleAdapter(val context: Context, val foodtrucks: List<FoodTru
 
 
     }
+
 }
