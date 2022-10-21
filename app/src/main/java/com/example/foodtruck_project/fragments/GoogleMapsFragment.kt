@@ -20,8 +20,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class GoogleMapsFragment : Fragment() {
 
-    private lateinit var googleMap: GoogleMap
-    lateinit var nyttFragment : Fragment
+
 
     private val callback = OnMapReadyCallback { googleMap ->
         /**
@@ -45,28 +44,10 @@ class GoogleMapsFragment : Fragment() {
     ): View? {
 
         val v = inflater.inflate(R.layout.fragment_google_maps, container, false)
-        //nyttFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
+
         return v
     }
-  /*  override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        val v = inflater.inflate(R.layout.fragment_user_signup, container, false)
 
-        woopTV1 = v.findViewById(R.id.WoopTV1)
-        woopTV2 = v.findViewById(R.id.WoopTV2)
-
-        registerTextView = v.findViewById(R.id.registerTextView)
-        newUsernameEditText = v.findViewById(R.id.newUsernameEditText)
-        newUserAddressEditText = v.findViewById(R.id.newUserAddressEditText)
-        newUserPhoneNumberEditText = v.findViewById(R.id.newUserPhoneNumberEditText)
-        newUserPasswordEditText = v.findViewById(R.id.newUserPasswordEditText)
-        newUserSignupButton = v.findViewById(R.id.newUserSignupButton)
-
-        return v*/
-    //}
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 

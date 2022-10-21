@@ -22,7 +22,7 @@ class MainActivity : AppCompatActivity() {
 
     private val GoogleMapsFragment = GoogleMapsFragment()
 
-    //lateinit var button678 : Button
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,18 +33,13 @@ class MainActivity : AppCompatActivity() {
         if (openMaps) {
             replaceFragment(GoogleMapsFragment)
         }
-        //button678 = findViewById(R.id.button678)
 
 
-        /*  button678.setOnClickListener {
-              val intent = Intent(this, SignUpActivity:: class.java)
-              startActivity(intent)
-          }*/
 
 
         navigationMenu = findViewById(R.id.bottom_navigation)
 
-        //replaceFragment(mapexploreFragment)
+
         replaceFragment(GoogleMapsFragment)
 
         navigationMenu.setOnItemSelectedListener {

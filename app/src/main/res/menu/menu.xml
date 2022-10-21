@@ -8,12 +8,12 @@
     <item
             android:id="@+id/ic_searchpref"
             android:icon="@drawable/ic_searchpref"
-            android:title="Info"/>
+            android:title="Food Info"/>
 
     <item
             android:id="@+id/ic_accountprofile"
             android:icon="@drawable/ic_accountprofile"
-            android:title="Profile"/>
+            android:title="Truck Profile"/>
 
 
 
