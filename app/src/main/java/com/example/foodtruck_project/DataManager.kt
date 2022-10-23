@@ -5,6 +5,7 @@ class DataManager {
         //for now hardcoded, should ve got from DB
         val allCategories = mutableListOf<Category>()
 
+        allCategories.add(Category("All Food", R.drawable.all_food_category) )
         allCategories.add(Category("American", R.drawable.american_food_category) )
         allCategories.add(Category("Asian", R.drawable.asian_food_category) )
         allCategories.add(Category("Fast food", R.drawable.fast_food_category) )
