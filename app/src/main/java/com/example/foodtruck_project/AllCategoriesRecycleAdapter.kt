@@ -13,8 +13,7 @@ class AllCategoriesRecycleAdapter(
 ) :
     RecyclerView.Adapter<AllCategoriesRecycleAdapter.ViewHolder>() {
 
-    val layoutInflater =
-        LayoutInflater.from(context)
+    val layoutInflater = LayoutInflater.from(context)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val itemView = layoutInflater.inflate(R.layout.category_item, parent, false)
@@ -27,8 +26,9 @@ class AllCategoriesRecycleAdapter(
 
 
         holder.categoryButton.setOnClickListener {
-            val intent = Intent(it.getContext(), FoodTruckListActivity::class.java)
-            it.getContext().startActivity(intent)
+            val intent = Intent(context, FoodTruckListActivity::class.java)
+          //  intent.putExtra("foodtype", category.foodtype)
+            context.startActivity(intent)
         }
     }
 

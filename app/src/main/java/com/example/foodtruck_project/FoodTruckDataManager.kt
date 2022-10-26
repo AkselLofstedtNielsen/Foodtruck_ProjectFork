@@ -9,12 +9,23 @@ object FoodTruckDataManager {
     }
 
     private fun createMockData() {
+
+
+        foodtrucks.add(
+            FoodTruck(
+                "Raan a haan thai food",
+                "11-14",
+                "Norrtullsgatan 2",
+                category = "Asian"
+            )
+        )
+
         foodtrucks.add(
             FoodTruck(
                 "Sonora grill",
                 "11-20",
                 "Tantolundsvägen 72",
-                category = "mexikanskt",
+                category = "Mexican",
                 menuImage = (R.drawable.sonora_menu)
             )
         )
@@ -23,7 +34,7 @@ object FoodTruckDataManager {
                 "Bronx",
                 "10.30-15",
                 "Hälsingegatan 37",
-                category = "amerikanskt",
+                category = "American",
                 menuImage = (R.drawable.bronx_menu)
             )
         )
@@ -32,7 +43,7 @@ object FoodTruckDataManager {
                 "The american pie company",
                 "11-18",
                 "Dalagatan 25",
-                category = "amerikanskt"
+                category = "American"
             )
         )
         foodtrucks.add(
@@ -40,24 +51,24 @@ object FoodTruckDataManager {
                 "Riksha indian food",
                 "11-20",
                 "Norra Stationsgatan 86",
-                category = "indiskt"
+                category = "Indian"
             )
         )
-        foodtrucks.add(FoodTruck("Maharaja", "11-16", "Tantolundsvägen 70", category = "indiskt"))
         foodtrucks.add(
             FoodTruck(
-                "Raan a haan thai food",
-                "11-14",
-                "Norrtullsgatan 2",
-                category = "asiatiskt"
+                "Maharaja",
+                "11-16",
+                "Tantolundsvägen 70",
+                category = "Indian"
             )
         )
+
         foodtrucks.add(
             FoodTruck(
                 "Yalla kebab och falafel",
                 "11-22",
                 "Ringvögen 162",
-                category = "snabbmat"
+                category = "Fast food"
             )
         )
     }

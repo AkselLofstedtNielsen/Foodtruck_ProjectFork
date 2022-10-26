@@ -13,20 +13,20 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FoodTruck_Project"
         tools:targetApi="31">
-
         <activity
-
+            android:name=".EditProfileActivity"
+            android:exported="false" />
+        <activity
             android:name=".FoodTruckMenuActivity"
             android:exported="false" />
         <activity
             android:name=".FoodTruckListActivity"
-
             android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:exported="false" />
-
-<!--             TODO: Before you run your application, you need a Google Maps API key.
+        <!--
+             TODO: Before you run your application, you need a Google Maps API key.
 
              To get one, follow the directions here:
 
@@ -35,14 +35,11 @@
              Once you have your API key (it starts with "AIza"), define a new property in your
              project's local.properties file (e.g. MAPS_API_KEY=Aiza...), and replace the
              "YOUR_API_KEY" string in this file with "${MAPS_API_KEY}".
-        &ndash;&gt;-->
-
+        &ndash;&gt;
+        -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyDWvEkA9jf9f4kTa1Q27tlazwPvAJly8kk" />
-
-
-
 
         <activity
             android:name=".CategoriesActivity"
@@ -62,11 +59,9 @@
         <activity
             android:name=".SignInActivity"
             android:exported="false" />
-
         <activity
-            android:name=".Item"
+            android:name=".ProfileActivity"
             android:exported="false" />
-
     </application>
 
 </manifest>

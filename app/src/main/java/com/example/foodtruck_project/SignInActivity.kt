@@ -4,9 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
-import androidx.fragment.app.Fragment
 import com.example.foodtruck_project.databinding.ActivitySignInBinding
-import com.example.foodtruck_project.fragments.GoogleMapsFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 
@@ -46,7 +44,7 @@ class SignInActivity : AppCompatActivity() {
 
                 firebaseAuth.signInWithEmailAndPassword(email, pass).addOnCompleteListener {
                     if (it.isSuccessful) {
-                        val intent = Intent(this, Item:: class.java)
+                        val intent = Intent(this, ProfileActivity:: class.java)
 
                         startActivity(intent)
                     } else {

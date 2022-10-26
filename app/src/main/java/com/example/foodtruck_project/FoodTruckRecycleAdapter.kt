@@ -51,12 +51,11 @@ class FoodTruckRecycleAdapter(val context: Context, private val foodtrucks: List
     }
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var nameView: TextView = itemView.findViewById<TextView>(R.id.nameTextView)
-        var openHoursView: TextView = itemView.findViewById<TextView>(R.id.openHoursTextView)
-        var foodTruckImageView: ImageView =
-            itemView.findViewById<ImageView>(R.id.foodTruckImageView)
-        var menuButton: Button = itemView.findViewById<Button>(R.id.menuButton)
-        var mapButton: Button = itemView.findViewById<Button>(R.id.mapButton)
+        var nameView: TextView = itemView.findViewById(R.id.nameTextView)
+        var openHoursView: TextView = itemView.findViewById(R.id.openHoursTextView)
+        var foodTruckImageView: ImageView = itemView.findViewById(R.id.foodTruckImageView)
+        var menuButton: Button = itemView.findViewById(R.id.menuButton)
+        var mapButton: Button = itemView.findViewById(R.id.mapButton)
     }
 
 }
