@@ -28,4 +28,6 @@ class FoodTruckListActivity : AppCompatActivity() {
 
         foodTruckRecyclerView.adapter = adapter
     }
+
+
 }
