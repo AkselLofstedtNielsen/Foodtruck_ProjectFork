@@ -25,64 +25,56 @@ class ProfileActivity : AppCompatActivity() {
 
     private var getContent =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-           nameView.text = (result.data?.getStringExtra("foodTruckName")).toString()
+            nameView.text = (result.data?.getStringExtra("foodTruckName")).toString()
             openHoursView.text = (result.data?.getStringExtra("openHours")).toString()
+            val item = items(name = nameView.text.toString(), openHours = openHoursView.text.toString())
+            val user = auth.currentUser
+
+            if (user != null) {
+                database.collection("users").document(user.uid).collection("Items").add(item)
+                    .addOnCompleteListener {
+                        Log.d("!!!", "add item")
+                    }
+            }
         }
 
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_profile)
+            override fun onCreate(savedInstanceState: Bundle?) {
+                super.onCreate(savedInstanceState)
+                setContentView(R.layout.activity_profile)
 
 
-        database = Firebase.firestore
-        auth = Firebase.auth
+                database = Firebase.firestore
+                auth = Firebase.auth
 
 
-        nameView = findViewById(R.id.nameView)
-        openHoursView = findViewById(R.id.openHoursView)
+                nameView = findViewById(R.id.nameView)
+                openHoursView = findViewById(R.id.openHoursView)
 
-        val editButton = findViewById<Button>(R.id.editButton)
+                val editButton = findViewById<Button>(R.id.editButton)
 
-        editButton.setOnClickListener {
-            edit()
-        }
+                editButton.setOnClickListener {
+                    edit()
+                }
 
-        val backButton = findViewById<ImageButton>(R.id.backButton)
-        backButton.setOnClickListener{
-            finish()
-        }
-    }
-
-    fun edit() {
-
-        val intent = Intent(this, EditProfileActivity::class.java)
-        var foodTruckName = nameView.text
-        intent.putExtra("foodTruckName",foodTruckName)
-        var openHours = openHoursView.text
-        intent.putExtra("openHours", openHours)
-        getContent.launch(intent)
-
-
-     /*   val item = items(name = nameView.text.toString())
-        nameView.setText("")
-
-
-        val user = auth.currentUser
-
-        if (user == null) {
-            return
-        }
-
-        database.collection("users").document(user.uid).collection("Items").add(item)
-            .addOnCompleteListener {
-                Log.d("!!!", "add item")
+                val backButton = findViewById<ImageButton>(R.id.backButton)
+                backButton.setOnClickListener {
+                    finish()
+                }
             }
 
-      */
-    }
+            fun edit() {
 
+                val intent = Intent(this, EditProfileActivity::class.java)
+                var foodTruckName = nameView.text
+                intent.putExtra("foodTruckName", foodTruckName)
+                var openHours = openHoursView.text
+                intent.putExtra("openHours", openHours)
+                getContent.launch(intent)
 
-}
+            }
+
+        }
+
 
 
