@@ -11,6 +11,16 @@
         android:layout_height="match_parent"
         tools:context=".ProfileActivity">
 
+        <TextView
+            android:id="@+id/textView18"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="6dp"
+            android:text="Longitud:"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView17" />
+
         <ImageButton
             android:id="@+id/backButton"
             android:layout_width="58dp"
@@ -81,17 +91,16 @@
             android:text="Menu"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView5" />
+            app:layout_constraintTop_toBottomOf="@+id/textView18" />
 
         <ImageView
             android:id="@+id/imageView4"
             android:layout_width="102dp"
             android:layout_height="146dp"
-            android:layout_marginStart="12dp"
-            android:layout_marginTop="46dp"
+            android:layout_marginStart="8dp"
             app:layout_constraintStart_toEndOf="@+id/imageView3"
-            app:layout_constraintTop_toBottomOf="@+id/imageView5"
-            app:srcCompat="@drawable/bronx_menu" />
+            app:srcCompat="@drawable/bronx_menu"
+            tools:layout_editor_absoluteY="329dp" />
 
         <TextView
             android:id="@+id/textView14"
@@ -103,17 +112,6 @@
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/openHoursEditText" />
-
-        <ImageView
-            android:id="@+id/imageView5"
-            android:layout_width="337dp"
-            android:layout_height="108dp"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="6dp"
-            android:scaleType="centerCrop"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView14"
-            app:srcCompat="@drawable/screen_shot_2022_10_26_at_15_54_21" />
 
         <EditText
             android:id="@+id/nameEditText"
@@ -136,6 +134,38 @@
             android:textSize="14sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView13" />
+
+        <TextView
+            android:id="@+id/textView17"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="6dp"
+            android:text="Latitud:"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView14" />
+
+        <EditText
+            android:id="@+id/latitudeEditText"
+            android:layout_width="169dp"
+            android:layout_height="22dp"
+            android:layout_marginStart="4dp"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:textSize="14sp"
+            app:layout_constraintStart_toEndOf="@+id/textView17"
+            tools:layout_editor_absoluteY="238dp" />
+
+        <EditText
+            android:id="@+id/longitudeEditText"
+            android:layout_width="170dp"
+            android:layout_height="21dp"
+            android:layout_marginStart="4dp"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:textSize="14sp"
+            app:layout_constraintStart_toEndOf="@+id/textView18"
+            tools:layout_editor_absoluteY="264dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

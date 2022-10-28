@@ -40,8 +40,7 @@ class FoodTruckRecycleAdapter(val context: Context, private val foodtrucks: List
         }
         holder.mapButton.setOnClickListener {
             val intent = Intent(context, MainActivity::class.java)
-            val openMaps = true
-            intent.putExtra("openMaps", openMaps)
+            foodTruck.showMe = true
             context.startActivity(intent)
         }
     }

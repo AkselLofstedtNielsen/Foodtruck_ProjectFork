@@ -2,14 +2,10 @@ package com.example.foodtruck_project
 
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Button
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import com.example.foodtruck_project.fragments.AccProfileFragment
-import com.example.foodtruck_project.fragments.GoogleMapsFragment
-import com.example.foodtruck_project.fragments.MapexploreFragment
-import com.example.foodtruck_project.fragments.SearchprefFragment
+import com.example.foodtruck_project.fragments.*
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 
@@ -22,24 +18,11 @@ class MainActivity : AppCompatActivity() {
 
     private val GoogleMapsFragment = GoogleMapsFragment()
 
-
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val openMaps = intent.getBooleanExtra("openMaps", false)
-        if (openMaps) {
-            replaceFragment(GoogleMapsFragment)
-        }
-
-
-
-
         navigationMenu = findViewById(R.id.bottom_navigation)
-
-
         replaceFragment(GoogleMapsFragment)
 
         navigationMenu.setOnItemSelectedListener {
@@ -59,13 +42,20 @@ class MainActivity : AppCompatActivity() {
             true
         }
 
-    }
+        //försök till att visa foodtruck som ett fragment på kartan TA INTE BORT!!!
+/*
+        val foodtruckFragment = FoodTruckFragment()
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.add(R.id.foodtruckPopup, foodtruckFragment, "FoodtruckFragment")
+        transaction.commit()
 
+ */
+
+    }
 
     private fun replaceFragment(fragment: Fragment) {
         val transaction = supportFragmentManager.beginTransaction()
         transaction.replace(R.id.fragment_container, fragment)
         transaction.commit()
     }
-
 }
