@@ -8,6 +8,13 @@ object FoodTruckDataManager {
         createMockData()
     }
 
+    fun searchFoodTrucks(foodType:String) : List<FoodTruck> {
+        //sökning bör göras av en DB-fråga
+        val filteredFoodTrucks = foodtrucks.filter { foodTruck -> foodTruck.category == foodType  }
+
+        return filteredFoodTrucks
+    }
+
     private fun createMockData() {
 
 
