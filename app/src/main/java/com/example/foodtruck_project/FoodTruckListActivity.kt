@@ -2,6 +2,8 @@ package com.example.foodtruck_project
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import android.widget.Adapter
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.Toast
@@ -24,7 +26,12 @@ class FoodTruckListActivity : AppCompatActivity() {
 
         foodTruckRecyclerView.layoutManager = LinearLayoutManager(this)
 
-        val adapter = FoodTruckRecycleAdapter(this, FoodTruckDataManager.foodtrucks)
+        var selectedCategory: String = intent.getStringExtra("foodtype").toString()
+        Log.i("selectedCategory", selectedCategory)
+
+        val foodTrucks : List<FoodTruck> = FoodTruckDataManager.searchFoodTrucks(selectedCategory)
+
+        val adapter = FoodTruckRecycleAdapter(this, foodTrucks)
 
         foodTruckRecyclerView.adapter = adapter
     }
