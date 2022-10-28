@@ -90,6 +90,15 @@
         app:layout_constraintTop_toBottomOf="@+id/textView12"
         app:srcCompat="@drawable/bronx_menu" />
 
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="102dp"
+        android:layout_height="146dp"
+        android:layout_marginStart="8dp"
+        app:layout_constraintStart_toEndOf="@+id/imageView3"
+        app:srcCompat="@drawable/bronx_menu"
+        tools:layout_editor_absoluteY="344dp" />
+
     <TextView
         android:id="@+id/textView12"
         android:layout_width="wrap_content"
@@ -99,17 +108,7 @@
         android:text="Menu"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView5" />
-
-    <ImageView
-        android:id="@+id/imageView4"
-        android:layout_width="102dp"
-        android:layout_height="146dp"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="46dp"
-        app:layout_constraintStart_toEndOf="@+id/imageView3"
-        app:layout_constraintTop_toBottomOf="@+id/imageView5"
-        app:srcCompat="@drawable/bronx_menu" />
+        app:layout_constraintTop_toBottomOf="@+id/textView11" />
 
     <TextView
         android:id="@+id/textView14"
@@ -122,15 +121,42 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/openHoursView" />
 
-    <ImageView
-        android:id="@+id/imageView5"
-        android:layout_width="337dp"
-        android:layout_height="108dp"
-        android:layout_marginStart="24dp"
+    <TextView
+        android:id="@+id/textView10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
         android:layout_marginTop="6dp"
-        android:scaleType="centerCrop"
+        android:text="Latitud:"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView14"
-        app:srcCompat="@drawable/screen_shot_2022_10_26_at_15_54_21" />
+        app:layout_constraintTop_toBottomOf="@+id/textView14" />
+
+    <TextView
+        android:id="@+id/textView11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="6dp"
+        android:text="Longitud:"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView10" />
+
+    <TextView
+        android:id="@+id/latitudeView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:text="Koordinater"
+        app:layout_constraintStart_toEndOf="@+id/textView10"
+        tools:layout_editor_absoluteY="253dp" />
+
+    <TextView
+        android:id="@+id/longitudeView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:text="Koordinater"
+        app:layout_constraintStart_toEndOf="@+id/textView11"
+        tools:layout_editor_absoluteY="278dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

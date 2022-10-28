@@ -18,16 +18,26 @@ import com.google.firebase.ktx.Firebase
 class ProfileActivity : AppCompatActivity() {
 
 
-    lateinit var nameView : TextView
-    lateinit var openHoursView : TextView
-    lateinit var database : FirebaseFirestore
-    lateinit var auth : FirebaseAuth
+    lateinit var nameView: TextView
+    lateinit var openHoursView: TextView
+    lateinit var latitudeView: TextView
+    lateinit var longitudeView: TextView
+    lateinit var database: FirebaseFirestore
+    lateinit var auth: FirebaseAuth
 
     private var getContent =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             nameView.text = (result.data?.getStringExtra("foodTruckName")).toString()
             openHoursView.text = (result.data?.getStringExtra("openHours")).toString()
-            val item = items(name = nameView.text.toString(), openHours = openHoursView.text.toString())
+            latitudeView.text = (result.data?.getStringExtra("latitude")).toString()
+            longitudeView.text = (result.data?.getStringExtra("longitude")).toString()
+            val item = items(
+                name = nameView.text.toString(),
+                openHours = openHoursView.text.toString(),
+                latitude = (latitudeView.text as String).toDouble(),
+                longitude = (longitudeView.text as String).toDouble()
+            )
+
             val user = auth.currentUser
 
             if (user != null) {
@@ -39,42 +49,44 @@ class ProfileActivity : AppCompatActivity() {
         }
 
 
-            override fun onCreate(savedInstanceState: Bundle?) {
-                super.onCreate(savedInstanceState)
-                setContentView(R.layout.activity_profile)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_profile)
 
+        database = Firebase.firestore
+        auth = Firebase.auth
 
-                database = Firebase.firestore
-                auth = Firebase.auth
+        nameView = findViewById(R.id.nameView)
+        openHoursView = findViewById(R.id.openHoursView)
+        longitudeView = findViewById(R.id.longitudeView)
+        latitudeView = findViewById(R.id.latitudeView)
 
+        //här hämta värden från firebase och sätta in i textfälten ovan
 
-                nameView = findViewById(R.id.nameView)
-                openHoursView = findViewById(R.id.openHoursView)
+        val editButton = findViewById<Button>(R.id.editButton)
 
-                val editButton = findViewById<Button>(R.id.editButton)
-
-                editButton.setOnClickListener {
-                    edit()
-                }
-
-                val backButton = findViewById<ImageButton>(R.id.backButton)
-                backButton.setOnClickListener {
-                    finish()
-                }
-            }
-
-            fun edit() {
-
-                val intent = Intent(this, EditProfileActivity::class.java)
-                var foodTruckName = nameView.text
-                intent.putExtra("foodTruckName", foodTruckName)
-                var openHours = openHoursView.text
-                intent.putExtra("openHours", openHours)
-                getContent.launch(intent)
-
-            }
-
+        editButton.setOnClickListener {
+            edit()
         }
+
+        val backButton = findViewById<ImageButton>(R.id.backButton)
+        backButton.setOnClickListener {
+            finish()
+        }
+    }
+
+    fun edit() {
+
+        val intent = Intent(this, EditProfileActivity::class.java)
+        intent.putExtra("foodTruckName", nameView.text)
+        intent.putExtra("openHours", openHoursView.text)
+        intent.putExtra("latitude", latitudeView.text)
+        intent.putExtra("longitude", longitudeView.text)
+        getContent.launch(intent)
+
+    }
+
+}
 
 
 
