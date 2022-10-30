@@ -2,7 +2,7 @@ package com.example.foodtruck_project
 
 class DataManager {
     fun getAllCategories(): List<Category> {
-        //for now hardcoded, should ve got from DB
+
         val allCategories = mutableListOf<Category>()
 
         allCategories.add(Category("All Food", R.drawable.all_food_category) )
