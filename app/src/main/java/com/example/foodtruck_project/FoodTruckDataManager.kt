@@ -1,5 +1,7 @@
 package com.example.foodtruck_project
 
+import android.content.Intent
+
 object FoodTruckDataManager {
 
     val foodtrucks = mutableListOf<FoodTruck>()
@@ -8,11 +10,16 @@ object FoodTruckDataManager {
         createMockData()
     }
 
-    fun searchFoodTrucks(foodType:String) : List<FoodTruck> {
+    fun searchFoodTrucks(foodType: String): List<FoodTruck> {
         //sökning bör göras av en DB-fråga
-        val filteredFoodTrucks = foodtrucks.filter { foodTruck -> foodTruck.category == foodType  }
-
-        return filteredFoodTrucks
+        if (foodType == "All Food")
+            return foodtrucks
+        else {
+            val filteredFoodTrucks = foodtrucks.filter { foodTruck ->
+                foodTruck.category == foodType
+            }
+            return filteredFoodTrucks
+        }
     }
 
     private fun createMockData() {
@@ -81,6 +88,15 @@ object FoodTruckDataManager {
                 59.30618100093423,
                 18.03292201418479,
                 category = "Fast food"
+            )
+        )
+        foodtrucks.add(
+            FoodTruck(
+                "Trattoria",
+                "11-15",
+                59.3079305,
+                18.0272796,
+                category = "Italian"
             )
         )
     }
