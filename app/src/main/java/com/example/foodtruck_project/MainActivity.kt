@@ -77,7 +77,7 @@ import com.google.firebase.ktx.Firebase
                     auth = FirebaseAuth.getInstance();
 
                     if (auth.getCurrentUser() != null) {
-                        // User is signed in (getCurrentUser() will be null if not signed in)
+                        // Profile user is signed in (getCurrentUser() will be null if not signed in
                         val intent = Intent(this, ProfileActivity::class.java);
                         startActivity(intent);
                     } else {
@@ -100,10 +100,7 @@ import com.google.firebase.ktx.Firebase
  */
 
     }
-    private fun LoggedInCheck() : Boolean{
-        val currentUser = auth.currentUser
-        return currentUser != null
-    }
+
 
     fun startLocationUpdates() {
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION)
