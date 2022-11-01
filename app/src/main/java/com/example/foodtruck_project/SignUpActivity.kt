@@ -18,7 +18,7 @@ class SignUpActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySignUpBinding
     private lateinit var firebaseAuth: FirebaseAuth
     lateinit var navigationMenu : BottomNavigationView
-   // private val GoogleMapsFragment = GoogleMapsFragment()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

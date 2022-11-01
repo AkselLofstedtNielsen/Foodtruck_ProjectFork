@@ -6,6 +6,7 @@ import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
 import android.os.Looper
+import android.provider.ContactsContract.Profile
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -13,9 +14,15 @@ import androidx.fragment.app.Fragment
 import com.example.foodtruck_project.fragments.*
 import com.google.android.gms.location.*
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 
+    val db = Firebase.firestore
+    var auth = Firebase.auth
 
-class MainActivity : AppCompatActivity() {
+    class MainActivity : AppCompatActivity() {
 
     private val REQUEST_LOCATION = 1
     lateinit var navigationMenu: BottomNavigationView
@@ -33,7 +40,7 @@ class MainActivity : AppCompatActivity() {
        locationCallback = object : LocationCallback() {
            override fun onLocationResult(locationResult: LocationResult) {
                for (location in locationResult.locations) {
-                   Log.d("!!!","lat: ${location.latitude}, lng: ${location.longitude}")
+                  // Log.d("!!!","lat: ${location.latitude}, lng: ${location.longitude}")
                }
            }
        }
@@ -48,7 +55,7 @@ class MainActivity : AppCompatActivity() {
 
 
         } else {
-                Log.d("!!!","before startLocation")
+               // Log.d("!!!","before startLocation")
                 startLocationUpdates()
         }
 
@@ -67,8 +74,17 @@ class MainActivity : AppCompatActivity() {
                     startActivity(intent)
                 }
                 R.id.ic_accountprofile -> {
-                    val intent = Intent(this, SignUpActivity::class.java)
-                    startActivity(intent)
+                    auth = FirebaseAuth.getInstance();
+
+                    if (auth.getCurrentUser() != null) {
+                        // User is signed in (getCurrentUser() will be null if not signed in)
+                        val intent = Intent(this, ProfileActivity::class.java);
+                        startActivity(intent);
+                    } else {
+                        val intent = Intent(this,SignInActivity::class.java)
+                        startActivity(intent)
+                    }
+
                 }
             }
             true
@@ -84,6 +100,11 @@ class MainActivity : AppCompatActivity() {
  */
 
     }
+    private fun LoggedInCheck() : Boolean{
+        val currentUser = auth.currentUser
+        return currentUser != null
+    }
+
     fun startLocationUpdates() {
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION)
             == PackageManager.PERMISSION_GRANTED) {
