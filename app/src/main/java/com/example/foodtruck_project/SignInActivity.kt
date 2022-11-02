@@ -14,13 +14,20 @@ class SignInActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySignInBinding
     private lateinit var firebaseAuth: FirebaseAuth
     lateinit var navigationMenu : BottomNavigationView
-    //private val GoogleMapsFragment = GoogleMapsFragment()
+
 
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        auth = FirebaseAuth.getInstance();
 
+        if (auth.getCurrentUser() != null) {
+            // användaren signar in (getCurrentUser() kommer att bli null om inte signad in.
+            val intent = Intent(this, ProfileActivity::class.java);
+            startActivity(intent);
+            finish();
+        }
 
         binding = ActivitySignInBinding.inflate(layoutInflater)
 
@@ -84,10 +91,5 @@ class SignInActivity : AppCompatActivity() {
 
     }
 
-/*    private fun replaceFragment(fragment: Fragment) {
-        val transaction = supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.fragment_container,fragment)
-        transaction.commit()
-    }*/
 
 }
