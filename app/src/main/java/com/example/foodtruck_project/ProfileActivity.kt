@@ -24,6 +24,8 @@ class ProfileActivity : AppCompatActivity() {
     lateinit var longitudeView: TextView
     lateinit var database: FirebaseFirestore
     lateinit var auth: FirebaseAuth
+    private lateinit var logout : Button
+
 
     private var getContent =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
@@ -73,6 +75,15 @@ class ProfileActivity : AppCompatActivity() {
         backButton.setOnClickListener {
             finish()
         }
+        logout = findViewById(R.id.logoutButton)
+        logout.setOnClickListener {
+            Firebase.auth.signOut()
+
+            val intent = Intent(this, MainActivity::class.java);
+            startActivity(intent)
+        }
+
+
     }
 
     fun edit() {
@@ -85,6 +96,8 @@ class ProfileActivity : AppCompatActivity() {
         getContent.launch(intent)
 
     }
+
+
 
 }
 
