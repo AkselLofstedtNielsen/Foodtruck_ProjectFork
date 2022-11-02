@@ -45,6 +45,7 @@ import com.google.firebase.ktx.Firebase
            override fun onLocationResult(locationResult: LocationResult) {
                for (location in locationResult.locations) {
                   // Log.d("!!!","lat: ${location.latitude}, lng: ${location.longitude}")
+
                }
            }
        }
