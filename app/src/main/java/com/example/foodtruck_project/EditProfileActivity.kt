@@ -8,6 +8,9 @@ import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
+import android.widget.Toast
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 
 class EditProfileActivity : AppCompatActivity() {
 
@@ -15,6 +18,7 @@ class EditProfileActivity : AppCompatActivity() {
     lateinit var openHoursEditText: EditText
     lateinit var latitudeEditText: EditText
     lateinit var longitudeEditText: EditText
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,6 +41,7 @@ class EditProfileActivity : AppCompatActivity() {
         longitudeEditText = findViewById(R.id.longitudeEditText)
         longitudeEditText.setText(longitude)
 
+
         val backButton = findViewById<ImageButton>(R.id.backButton)
         backButton.setOnClickListener{
             finish()
@@ -55,8 +60,7 @@ class EditProfileActivity : AppCompatActivity() {
         intent.putExtra("openHours", openHoursEditText.text.toString())
         intent.putExtra("latitude", latitudeEditText.text.toString())
         intent.putExtra("longitude", longitudeEditText.text.toString())
-        setResult(Activity.RESULT_OK, intent)
-
+       setResult(Activity.RESULT_OK, intent)
         finish()
     }
 }
