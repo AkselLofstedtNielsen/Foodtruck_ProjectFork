@@ -1,10 +1,12 @@
 package com.example.foodtruck_project
 
 
+import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
+import android.view.View
 import android.os.Looper
 import android.provider.ContactsContract.Profile
 import android.util.Log
@@ -24,7 +26,9 @@ import com.google.firebase.ktx.Firebase
 
     class MainActivity : AppCompatActivity() {
 
+
     private val REQUEST_LOCATION = 1
+
     lateinit var navigationMenu: BottomNavigationView
     lateinit var locationProvider : FusedLocationProviderClient
     private val GoogleMapsFragment = GoogleMapsFragment()
@@ -90,15 +94,6 @@ import com.google.firebase.ktx.Firebase
             true
         }
 
-        //försök till att visa foodtruck som ett fragment på kartan TA INTE BORT!!!
-/*
-        val foodtruckFragment = FoodTruckFragment()
-        val transaction = supportFragmentManager.beginTransaction()
-        transaction.add(R.id.foodtruckPopup, foodtruckFragment, "FoodtruckFragment")
-        transaction.commit()
-
- */
-
     }
 
 
@@ -124,6 +119,18 @@ import com.google.firebase.ktx.Firebase
         transaction.commit()
     }
 
+
+    /*
+     fun addFragment(view : View){
+        val foodtruckFragment = FoodTruckFragment()
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.add(R.id.foodTruckPopUp, foodtruckFragment, "FoodtruckFragment")
+        transaction.commit()
+         Log.d("!!!", "hej ${foodtruckFragment}, $transaction")
+    }
+
+     */
+
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
@@ -140,3 +147,4 @@ import com.google.firebase.ktx.Firebase
     }
 
 }
+
