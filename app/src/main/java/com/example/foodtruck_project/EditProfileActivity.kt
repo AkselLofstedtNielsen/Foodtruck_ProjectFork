@@ -2,7 +2,6 @@ package com.example.foodtruck_project
 
 import android.app.Activity
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
@@ -11,6 +10,8 @@ import android.widget.ImageButton
 import android.widget.Toast
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import android.widget.*
+import androidx.appcompat.app.AppCompatActivity
 
 class EditProfileActivity : AppCompatActivity() {
 
@@ -18,6 +19,7 @@ class EditProfileActivity : AppCompatActivity() {
     lateinit var openHoursEditText: EditText
     lateinit var latitudeEditText: EditText
     lateinit var longitudeEditText: EditText
+    lateinit var categorySpinner: Spinner
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,6 +30,7 @@ class EditProfileActivity : AppCompatActivity() {
         val openHours = intent.getStringExtra("openHours")
         val latitude = intent.getStringExtra("latitude")
         val longitude = intent.getStringExtra("longitude")
+        val category = intent.getStringExtra("category")
 
         nameEditText = findViewById(R.id.nameEditText)
         nameEditText.setText(foodTruckName)
@@ -51,6 +54,21 @@ class EditProfileActivity : AppCompatActivity() {
         saveButton.setOnClickListener {
             saveChanges()
         }
+        val arraySpinner = arrayOf(
+            "American", "Asian", "Fast food", "Indian", "Italian", "Mexican"
+        )
+
+        categorySpinner = findViewById(R.id.categorySpinner)
+
+        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, arraySpinner)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        categorySpinner.adapter = adapter
+
+        val spinnerPosition: Int = adapter.getPosition(category)
+
+        categorySpinner.setSelection(spinnerPosition)
+
+
     }
 
     private fun saveChanges() {
@@ -61,6 +79,11 @@ class EditProfileActivity : AppCompatActivity() {
         intent.putExtra("latitude", latitudeEditText.text.toString())
         intent.putExtra("longitude", longitudeEditText.text.toString())
        setResult(Activity.RESULT_OK, intent)
+
+
+        var category: String = categorySpinner.selectedItem.toString()
+        intent.putExtra("category", category)
+        setResult(Activity.RESULT_OK, intent)
         finish()
     }
 }

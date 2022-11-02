@@ -42,12 +42,13 @@
         android:id="@+id/menuButton"
         android:layout_width="74dp"
         android:layout_height="35dp"
-        android:layout_marginTop="6dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="8dp"
         android:backgroundTint="#2196F3"
         android:text="Meny"
         android:textSize="10sp"
         app:layout_constraintEnd_toStartOf="@+id/foodTruckImageView"
-        app:layout_constraintHorizontal_bias="0.163"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/openHoursTextView" />
 
@@ -55,6 +56,7 @@
         android:id="@+id/mapButton"
         android:layout_width="129dp"
         android:layout_height="34dp"
+        android:layout_marginStart="25dp"
         android:layout_marginTop="4dp"
         android:layout_marginEnd="91dp"
         android:layout_marginBottom="8dp"
@@ -63,7 +65,6 @@
         android:textSize="10sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/foodTruckImageView"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/menuButton"
         app:layout_constraintVertical_bias="0.0" />
