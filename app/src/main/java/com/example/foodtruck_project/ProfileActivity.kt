@@ -3,9 +3,7 @@ package com.example.foodtruck_project
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.widget.Button
-import android.widget.ImageButton
-import android.widget.TextView
+import android.widget.*
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
@@ -22,6 +20,8 @@ class ProfileActivity : AppCompatActivity() {
     lateinit var openHoursView: TextView
     lateinit var latitudeView: TextView
     lateinit var longitudeView: TextView
+    lateinit var categoryView: TextView
+
     lateinit var database: FirebaseFirestore
     lateinit var auth: FirebaseAuth
 
@@ -31,11 +31,13 @@ class ProfileActivity : AppCompatActivity() {
             openHoursView.text = (result.data?.getStringExtra("openHours")).toString()
             latitudeView.text = (result.data?.getStringExtra("latitude")).toString()
             longitudeView.text = (result.data?.getStringExtra("longitude")).toString()
+            categoryView.text = (result.data?.getStringExtra("category")).toString()
             val item = items(
                 name = nameView.text.toString(),
                 openHours = openHoursView.text.toString(),
                 latitude = (latitudeView.text as String).toDouble(),
-                longitude = (longitudeView.text as String).toDouble()
+                longitude = (longitudeView.text as String).toDouble(),
+                category = categoryView.text.toString()
             )
 
             val user = auth.currentUser
@@ -60,6 +62,7 @@ class ProfileActivity : AppCompatActivity() {
         openHoursView = findViewById(R.id.openHoursView)
         longitudeView = findViewById(R.id.longitudeView)
         latitudeView = findViewById(R.id.latitudeView)
+        categoryView = findViewById(R.id.categoryView)
 
         //här hämta värden från firebase och sätta in i textfälten ovan
 
@@ -73,6 +76,8 @@ class ProfileActivity : AppCompatActivity() {
         backButton.setOnClickListener {
             finish()
         }
+
+
     }
 
     fun edit() {
@@ -82,6 +87,8 @@ class ProfileActivity : AppCompatActivity() {
         intent.putExtra("openHours", openHoursView.text)
         intent.putExtra("latitude", latitudeView.text)
         intent.putExtra("longitude", longitudeView.text)
+        intent.putExtra("category", categoryView.text)
+
         getContent.launch(intent)
 
     }

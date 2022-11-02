@@ -1,15 +1,14 @@
 package com.example.foodtruck_project.fragments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.foodtruck_project.FoodTruckDataManager
+import com.example.foodtruck_project.MainActivity
 import com.example.foodtruck_project.R
 import com.google.android.gms.maps.CameraUpdateFactory
-import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
@@ -48,8 +47,14 @@ class GoogleMapsFragment : Fragment() {
             }
         }
 
+
+
         googleMap.setOnMarkerClickListener { // Här ska man visa upp foodtrucken vars pin är tryckt på
             //atm läggs bara en pin till för att visa på funktion
+
+
+        //    (activity as MainActivity?)?.addFragment()
+
             val yourLocation = LatLng(59.31037749894223, 18.025368727268727)
             googleMap.addMarker(MarkerOptions().position(yourLocation).title("Du klickade på en marker"))
             false

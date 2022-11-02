@@ -1,8 +1,11 @@
 package com.example.foodtruck_project
 
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.foodtruck_project.fragments.*
@@ -10,6 +13,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 
 
 class MainActivity : AppCompatActivity() {
+
 
     private val mapexploreFragment = MapexploreFragment()
     private val searchprefFragment = SearchprefFragment()
@@ -42,15 +46,6 @@ class MainActivity : AppCompatActivity() {
             true
         }
 
-        //försök till att visa foodtruck som ett fragment på kartan TA INTE BORT!!!
-/*
-        val foodtruckFragment = FoodTruckFragment()
-        val transaction = supportFragmentManager.beginTransaction()
-        transaction.add(R.id.foodtruckPopup, foodtruckFragment, "FoodtruckFragment")
-        transaction.commit()
-
- */
-
     }
 
     private fun replaceFragment(fragment: Fragment) {
@@ -58,4 +53,15 @@ class MainActivity : AppCompatActivity() {
         transaction.replace(R.id.fragment_container, fragment)
         transaction.commit()
     }
+
+    /*
+     fun addFragment(view : View){
+        val foodtruckFragment = FoodTruckFragment()
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.add(R.id.foodTruckPopUp, foodtruckFragment, "FoodtruckFragment")
+        transaction.commit()
+         Log.d("!!!", "hej ${foodtruckFragment}, $transaction")
+    }
+
+     */
 }

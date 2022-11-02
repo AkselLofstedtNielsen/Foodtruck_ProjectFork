@@ -7,6 +7,7 @@ data class items (@DocumentId var DocumentId : String? = null,
                   var openHours: String? = null,
                   var latitude: Double = 0.0,
                   var longitude: Double = 0.0,
+                  var category: String,
                   var num: Int? = null,
                   var truck : Boolean = false)
 
