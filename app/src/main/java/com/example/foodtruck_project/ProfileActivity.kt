@@ -58,8 +58,12 @@ class ProfileActivity : AppCompatActivity() {
         setContentView(R.layout.activity_profile)
 
         database = Firebase.firestore
+
         auth = Firebase.auth
 
+       // auth = FirebaseAuth.getInstance()
+
+        val user = auth.currentUser
         nameView = findViewById(R.id.nameView)
         openHoursView = findViewById(R.id.openHoursView)
         longitudeView = findViewById(R.id.longitudeView)
@@ -67,6 +71,36 @@ class ProfileActivity : AppCompatActivity() {
         categoryView = findViewById(R.id.categoryView)
 
         //här hämta värden från firebase och sätta in i textfälten ovan
+
+        if(user != null) {
+
+            val docRef = db.collection("users").document(user.uid).collection("Items").document("lvZb96dizT7zqirsjWct")
+            docRef.get()
+                .addOnSuccessListener { document ->
+                    if (document != null) {
+                        val name = document.getString("name")
+                        val openHours = document.getString("openHours")
+                        val latitude = document.getDouble("latitude")
+                        val longitude = document.getDouble("longitude")
+                        val category = document.getString("category")
+                        Log.d("profil", "$name, $openHours, $latitude, $longitude, $category")
+
+                        nameView.text = name
+                        openHoursView.text = openHours
+                        latitudeView.text = latitude.toString()
+                        longitudeView.text = longitude.toString()
+                        categoryView.text = category
+
+                    } else {
+                        Log.d("!!!", "No such document")
+                    }
+                }
+                .addOnFailureListener { exception ->
+                    Log.d("!!!", "get failed with ", exception)
+                }
+        }
+
+
 
         val editButton = findViewById<Button>(R.id.editButton)
 
@@ -86,8 +120,6 @@ class ProfileActivity : AppCompatActivity() {
             val intent = Intent(this, MainActivity::class.java);
             startActivity(intent)
         }
-
-
 
     }
 

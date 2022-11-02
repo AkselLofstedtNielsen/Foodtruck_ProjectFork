@@ -2,13 +2,12 @@ package com.example.foodtruck_project.fragments
 
 import android.location.Location
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.example.foodtruck_project.FoodTruckDataManager
-import com.example.foodtruck_project.MainActivity
-import com.example.foodtruck_project.R
+import com.example.foodtruck_project.*
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -30,6 +29,7 @@ class GoogleMapsFragment : Fragment() {
          * install it inside the SupportMapFragment. This method will only be triggered once the
          * user has installed Google Play services and returned to the app.
          */
+
 
         for (foodtruck in FoodTruckDataManager.foodtrucks) {
             val currentFoodTruck = LatLng(foodtruck.latitude, foodtruck.longitude)

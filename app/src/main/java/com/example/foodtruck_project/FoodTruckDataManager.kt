@@ -1,6 +1,12 @@
 package com.example.foodtruck_project
 
 import android.content.Intent
+import android.util.Log
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.firestore.ktx.toObject
+import com.google.firebase.ktx.Firebase
 
 object FoodTruckDataManager {
 
@@ -24,14 +30,77 @@ object FoodTruckDataManager {
 
     private fun createMockData() {
 
+        //här gå igenom alla users och hämta ut det första dokumentet, sorterat på tid
+
+
+/*
+        db.collection("Items").get()
+            .addOnSuccessListener { result ->
+                for (document in result) {
+                    Log.d("hallå", "${document.id} => ${document.data}")
+                }
+            }
+            .addOnFailureListener { exception ->
+                Log.d("TAG", "Error getting documents: ", exception)
+            }
+
+ */
+        /*
+        val docRef =
+            db.collection("users")
+                .document("c1QQLtE3hiOcUCHYqykIm2V2u313")
+                .collection("Items")
+                .document("lvZb96dizT7zqirsjWct")
+
+
+        docRef.get().addOnSuccessListener { document ->
+            if (document != null) {
+
+            /*    val food = document.toObject(items::class.java)
+
+                if (food != null) {
+                    Log.d("hejsan", "${food.name}")
+                }
+
+             */
+                val name = document.getString("name")
+                val openHours = document.getString("openHours")
+                val latitude = document.getDouble("latitude")
+                val longitude = document.getDouble("longitude")
+                val category = document.getString("category")
+                Log.d("!!!", "$name, $openHours, $latitude, $longitude, $category")
+
+                foodtrucks.add(
+
+                    FoodTruck(
+                        name.toString(),
+                        openHours.toString(),
+                        59.3100721082596,
+                        18.030037153004116,
+                        category = category.toString()
+
+                    )
+                )
+                Log.d("ekej", "$name")
+            } else {
+                Log.d("!!!", "No such document")
+            }
+
+            //   Log.d("juj", "$name, $openHours, $category")
+        }
+
+         */
 
         foodtrucks.add(
-            FoodTruck("Raan a haan thai food",
+            FoodTruck(
+                "Raan a haan thai food",
                 "11-14",
                 59.307172185658146,
                 18.027411629118248,
-                category = "Asian")
+                category = "Asian"
+            )
         )
+
 
         foodtrucks.add(
             FoodTruck(
@@ -99,5 +168,13 @@ object FoodTruckDataManager {
                 category = "Italian"
             )
         )
+
+        for (foodtruck in foodtrucks) {
+            Log.d("ded", "${foodtruck.name}, ${foodtruck.hours}, ${foodtruck.latitude}")
+        }
+
     }
 }
+
+
+
