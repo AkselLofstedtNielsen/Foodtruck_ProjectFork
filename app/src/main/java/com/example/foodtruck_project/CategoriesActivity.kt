@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.foodtruck_project.fragments.GoogleMapsFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.auth.FirebaseAuth
 
 class CategoriesActivity : AppCompatActivity() {
     lateinit var dataManager: DataManager
@@ -39,8 +40,16 @@ class CategoriesActivity : AppCompatActivity() {
                     startActivity(intent)
                 }
                 R.id.ic_accountprofile -> {
-                    val intent = Intent(this, SignUpActivity:: class.java)
-                    startActivity(intent)
+                    auth = FirebaseAuth.getInstance();
+
+                    if (auth.getCurrentUser() != null) {
+                        // Profile user is signed in (getCurrentUser() will be null if not signed in
+                        val intent = Intent(this, ProfileActivity::class.java);
+                        startActivity(intent);
+                    } else {
+                        val intent = Intent(this,SignInActivity::class.java)
+                        startActivity(intent)
+                    }
                 }
             }
             true
