@@ -44,6 +44,10 @@ class EditProfileActivity : AppCompatActivity() {
         longitudeEditText = findViewById(R.id.longitudeEditText)
         longitudeEditText.setText(longitude)
 
+        nameEditText.text.clear()
+        openHoursEditText.text.clear()
+        latitudeEditText.text.clear()
+        longitudeEditText.text.clear()
 
         val backButton = findViewById<ImageButton>(R.id.backButton)
         backButton.setOnClickListener{

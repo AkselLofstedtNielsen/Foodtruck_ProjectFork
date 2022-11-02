@@ -49,7 +49,6 @@ import com.google.firebase.ktx.Firebase
                }
            }
        }
-        //locationProvider.requestLocationUpdates(locationRequest,locationCallback, Looper.getMainLooper())
 
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION)
             != PackageManager.PERMISSION_GRANTED) {
@@ -57,6 +56,7 @@ import com.google.firebase.ktx.Firebase
                 arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION),
                 REQUEST_LOCATION
                 )
+
 
 
         } else {
@@ -104,8 +104,7 @@ import com.google.firebase.ktx.Firebase
             locationProvider.requestLocationUpdates(locationRequest,locationCallback, Looper.getMainLooper())
         }
 
-        }
-
+    }
 
         fun createLocationRequest() =
         LocationRequest.create().apply {
