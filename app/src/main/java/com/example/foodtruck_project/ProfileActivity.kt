@@ -144,7 +144,7 @@ class ProfileActivity : AppCompatActivity() {
         logout.setOnClickListener {
             Firebase.auth.signOut()
 
-            val intent = Intent(this, MainActivity::class.java);
+            val intent = Intent(this, GoogleMapsActivity::class.java)
             startActivity(intent)
         }
 
