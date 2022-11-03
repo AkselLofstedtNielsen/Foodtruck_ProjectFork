@@ -1,12 +1,10 @@
 package com.example.foodtruck_project
 
-import android.content.Intent
 import android.util.Log
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.firestore.ktx.toObject
+import com.google.firebase.firestore.Query
 import com.google.firebase.ktx.Firebase
+import com.google.type.LatLng
 
 object FoodTruckDataManager {
 
@@ -28,69 +26,55 @@ object FoodTruckDataManager {
         }
     }
 
-    private fun createMockData() {
 
-        //här gå igenom alla users och hämta ut det första dokumentet, sorterat på tid
+    fun createMockData() {
 
+        auth = Firebase.auth
 
-/*
-        db.collection("Items").get()
-            .addOnSuccessListener { result ->
-                for (document in result) {
-                    Log.d("hallå", "${document.id} => ${document.data}")
-                }
-            }
-            .addOnFailureListener { exception ->
-                Log.d("TAG", "Error getting documents: ", exception)
-            }
+        var name = ""
+        var openHours = ""
+        var latitude = 0.0
+        var longitude = 0.0
+        var category = ""
 
- */
-        /*
-        val docRef =
-            db.collection("users")
-                .document("c1QQLtE3hiOcUCHYqykIm2V2u313")
+        val user = auth.currentUser
+
+        if (user != null) {
+
+            val docRef = db.collection("users")
+                .document(user.uid)
                 .collection("Items")
-                .document("lvZb96dizT7zqirsjWct")
+                .orderBy("date", Query.Direction.DESCENDING)
+                .limit(1)
 
+            docRef.get()
+                .addOnSuccessListener { document ->
+                    if (document != null) {
 
-        docRef.get().addOnSuccessListener { document ->
-            if (document != null) {
+                        val foodtruck = document.toObjects(items::class.java)
 
-            /*    val food = document.toObject(items::class.java)
+                         name = foodtruck[0].name.toString()
+                         openHours = foodtruck[0].openHours.toString()
+                         latitude = foodtruck[0].latitude
+                         longitude = foodtruck[0].longitude
+                         category = foodtruck[0].category
 
-                if (food != null) {
-                    Log.d("hejsan", "${food.name}")
+                        Log.d("dök", "$name, $openHours, $latitude, $longitude, $category ")
+
+                    } else {
+                        Log.d("!!!", "No such document")
+                    }
+                    //   Log.d("juj", "$name, $openHours, $category")
                 }
-
-             */
-                val name = document.getString("name")
-                val openHours = document.getString("openHours")
-                val latitude = document.getDouble("latitude")
-                val longitude = document.getDouble("longitude")
-                val category = document.getString("category")
-                Log.d("!!!", "$name, $openHours, $latitude, $longitude, $category")
-
-                foodtrucks.add(
-
-                    FoodTruck(
-                        name.toString(),
-                        openHours.toString(),
-                        59.3100721082596,
-                        18.030037153004116,
-                        category = category.toString()
-
-                    )
-                )
-                Log.d("ekej", "$name")
-            } else {
-                Log.d("!!!", "No such document")
-            }
-
-            //   Log.d("juj", "$name, $openHours, $category")
         }
+        foodtrucks.add(FoodTruck(
+            name,
+            openHours,
+            latitude,
+            longitude,
+            category = category
 
-         */
-
+        ))
         foodtrucks.add(
             FoodTruck(
                 "Raan a haan thai food",
@@ -100,8 +84,6 @@ object FoodTruckDataManager {
                 category = "Asian"
             )
         )
-
-
         foodtrucks.add(
             FoodTruck(
                 "Sonora grill",
@@ -109,7 +91,6 @@ object FoodTruckDataManager {
                 59.31171691896732,
                 18.043566467202066,
                 category = "Mexican",
-                menuImage = (R.drawable.sonora_menu)
             )
         )
         foodtrucks.add(
@@ -119,7 +100,6 @@ object FoodTruckDataManager {
                 59.30742285326887,
                 18.029651979181896,
                 category = "American",
-                menuImage = (R.drawable.bronx_menu)
             )
         )
         foodtrucks.add(
@@ -170,11 +150,13 @@ object FoodTruckDataManager {
         )
 
         for (foodtruck in foodtrucks) {
-            Log.d("ded", "${foodtruck.name}, ${foodtruck.hours}, ${foodtruck.latitude}")
+            Log.d("död", "${foodtruck.name}, ${foodtruck.openHours}, ${foodtruck.latitude}")
         }
 
     }
 }
+
+
 
 
 

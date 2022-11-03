@@ -21,16 +21,16 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
-    val db = Firebase.firestore
-    var auth = Firebase.auth
+val db = Firebase.firestore
+var auth = Firebase.auth
 
-    class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity() {
 
 
     private val REQUEST_LOCATION = 1
 
     lateinit var navigationMenu: BottomNavigationView
-    lateinit var locationProvider : FusedLocationProviderClient
+    lateinit var locationProvider: FusedLocationProviderClient
     private val GoogleMapsFragment = GoogleMapsFragment()
     lateinit var locationCallback: LocationCallback
     lateinit var locationRequest: LocationRequest
@@ -41,27 +41,32 @@ import com.google.firebase.ktx.Firebase
 
         locationProvider = LocationServices.getFusedLocationProviderClient(this)
         locationRequest = createLocationRequest()
-       locationCallback = object : LocationCallback() {
-           override fun onLocationResult(locationResult: LocationResult) {
-               for (location in locationResult.locations) {
-                  // Log.d("!!!","lat: ${location.latitude}, lng: ${location.longitude}")
+        locationCallback = object : LocationCallback() {
+            override fun onLocationResult(locationResult: LocationResult) {
+                for (location in locationResult.locations) {
+                    // Log.d("!!!","lat: ${location.latitude}, lng: ${location.longitude}")
 
-               }
-           }
-       }
+                }
+            }
+        }
         //locationProvider.requestLocationUpdates(locationRequest,locationCallback, Looper.getMainLooper())
 
-        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION)
-            != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this,
+        if (ActivityCompat.checkSelfPermission(
+                this,
+                android.Manifest.permission.ACCESS_FINE_LOCATION
+            )
+            != PackageManager.PERMISSION_GRANTED
+        ) {
+            ActivityCompat.requestPermissions(
+                this,
                 arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION),
                 REQUEST_LOCATION
-                )
+            )
 
 
         } else {
-               // Log.d("!!!","before startLocation")
-                startLocationUpdates()
+            // Log.d("!!!","before startLocation")
+            startLocationUpdates()
         }
 
 
@@ -86,7 +91,7 @@ import com.google.firebase.ktx.Firebase
                         val intent = Intent(this, ProfileActivity::class.java);
                         startActivity(intent);
                     } else {
-                        val intent = Intent(this,SignInActivity::class.java)
+                        val intent = Intent(this, SignInActivity::class.java)
                         startActivity(intent)
                     }
 
@@ -99,20 +104,28 @@ import com.google.firebase.ktx.Firebase
 
 
     fun startLocationUpdates() {
-        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION)
-            == PackageManager.PERMISSION_GRANTED) {
-            locationProvider.requestLocationUpdates(locationRequest,locationCallback, Looper.getMainLooper())
+        if (ActivityCompat.checkSelfPermission(
+                this,
+                android.Manifest.permission.ACCESS_FINE_LOCATION
+            )
+            == PackageManager.PERMISSION_GRANTED
+        ) {
+            locationProvider.requestLocationUpdates(
+                locationRequest,
+                locationCallback,
+                Looper.getMainLooper()
+            )
         }
 
-        }
-
-
-        fun createLocationRequest() =
-        LocationRequest.create().apply {
-        interval = 2000
-        fastestInterval = 1000
-        priority = LocationRequest.PRIORITY_HIGH_ACCURACY
     }
+
+
+    fun createLocationRequest() =
+        LocationRequest.create().apply {
+            interval = 2000
+            fastestInterval = 1000
+            priority = LocationRequest.PRIORITY_HIGH_ACCURACY
+        }
 
     private fun replaceFragment(fragment: Fragment) {
         val transaction = supportFragmentManager.beginTransaction()
@@ -139,7 +152,7 @@ import com.google.firebase.ktx.Firebase
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == REQUEST_LOCATION) {
-            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 startLocationUpdates()
             }
         }

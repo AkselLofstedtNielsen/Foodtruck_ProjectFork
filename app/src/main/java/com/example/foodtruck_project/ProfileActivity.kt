@@ -1,20 +1,24 @@
 package com.example.foodtruck_project
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.widget.*
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import java.time.Instant
+import java.time.format.DateTimeFormatter
 
 
 class ProfileActivity : AppCompatActivity() {
-
 
     lateinit var nameView: TextView
     lateinit var openHoursView: TextView
@@ -26,7 +30,6 @@ class ProfileActivity : AppCompatActivity() {
     lateinit var auth: FirebaseAuth
     private lateinit var logout : Button
 
-
     private var getContent =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             nameView.text = (result.data?.getStringExtra("foodTruckName")).toString()
@@ -34,22 +37,44 @@ class ProfileActivity : AppCompatActivity() {
             latitudeView.text = (result.data?.getStringExtra("latitude")).toString()
             longitudeView.text = (result.data?.getStringExtra("longitude")).toString()
             categoryView.text = (result.data?.getStringExtra("category")).toString()
-            val item = items(
-                name = nameView.text.toString(),
-                openHours = openHoursView.text.toString(),
-                latitude = (latitudeView.text as String).toDouble(),
-                longitude = (longitudeView.text as String).toDouble(),
-                category = categoryView.text.toString()
-            )
 
+            var item =
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    items(
+                        name = nameView.text.toString(),
+                        openHours = openHoursView.text.toString(),
+                        latitude = (latitudeView.text as String).toDouble(),
+                        longitude = (longitudeView.text as String).toDouble(),
+                        category = categoryView.text.toString(),
+                        date = DateTimeFormatter.ISO_INSTANT.format(Instant.now())
+
+                    )
+                } else {
+                    TODO("VERSION.SDK_INT < O")
+                }
+
+
+
+            Log.d("!?!hej", "Datum: ${item.date}")
             val user = auth.currentUser
-
+            
             if (user != null) {
+                Log.d("köl", ":)))")
+
                 database.collection("users").document(user.uid).collection("Items").add(item)
                     .addOnCompleteListener {
-                        Log.d("!!!", "add item")
+                        Log.d("!!!", "add item, ${user}")
                     }
+            }else{
+                Log.d("köl", ":<")
             }
+          /*  if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                saveData()
+            }
+
+           */
+
         }
 
 
@@ -74,15 +99,23 @@ class ProfileActivity : AppCompatActivity() {
 
         if(user != null) {
 
-            val docRef = db.collection("users").document(user.uid).collection("Items").document("lvZb96dizT7zqirsjWct")
+            val docRef = db.collection("users")
+                .document(user.uid)
+                .collection("Items")
+                .orderBy("date", Query.Direction.DESCENDING)
+                .limit(1)
+
             docRef.get()
                 .addOnSuccessListener { document ->
                     if (document != null) {
-                        val name = document.getString("name")
-                        val openHours = document.getString("openHours")
-                        val latitude = document.getDouble("latitude")
-                        val longitude = document.getDouble("longitude")
-                        val category = document.getString("category")
+
+                        val foodtruck = document.toObjects(items::class.java)
+
+                        val name = foodtruck[0].name
+                        val openHours = foodtruck[0].openHours
+                        val latitude = foodtruck[0].latitude
+                        val longitude = foodtruck[0].longitude
+                        val category = foodtruck[0].category
                         Log.d("profil", "$name, $openHours, $latitude, $longitude, $category")
 
                         nameView.text = name
@@ -99,8 +132,6 @@ class ProfileActivity : AppCompatActivity() {
                     Log.d("!!!", "get failed with ", exception)
                 }
         }
-
-
 
         val editButton = findViewById<Button>(R.id.editButton)
 
@@ -120,7 +151,6 @@ class ProfileActivity : AppCompatActivity() {
             val intent = Intent(this, MainActivity::class.java);
             startActivity(intent)
         }
-
     }
 
     fun edit() {
@@ -138,7 +168,45 @@ class ProfileActivity : AppCompatActivity() {
 
 
 
+   /* fun saveData(){
+        var item =
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                items(
+                    name = nameView.text.toString(),
+                    openHours = openHoursView.text.toString(),
+                    latitude = (latitudeView.text as String).toDouble(),
+                    longitude = (longitudeView.text as String).toDouble(),
+                    category = categoryView.text.toString(),
+                    date = DateTimeFormatter.ISO_INSTANT.format(Instant.now())
+
+                )
+            } else {
+                TODO("VERSION.SDK_INT < O")
+            }
+
+
+        Log.d("!?!hej", "Datum: ${item.date}")
+        val user = auth.currentUser
+
+
+        if (user != null) {
+            Log.d("köl", ":)))")
+            database.collection("users").document("c1QQLtE3hiOcUCHYqykIm2V2u313").collection("Items").add(item)
+                .addOnCompleteListener {
+                    Log.d("!!!", "add item, ${user}")
+                }
+        }else{
+            Log.d("köl", ":<")
+        }
+    }
+
+    */
+
+
+
 }
+
+
 
 
 

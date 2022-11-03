@@ -1,14 +1,15 @@
 package com.example.foodtruck_project
 
-class FoodTruck(
+import com.google.type.LatLng
+
+data class FoodTruck(
 
     var name: String,
-    var hours: String,
+    var openHours: String,
     var latitude: Double,
     var longitude: Double,
-    var truckImage: Int? = null,
     var category: String,
-    var menuImage: Int? = null,
+    var menu: String? = null,
     var showMe: Boolean = false
 ) {
 

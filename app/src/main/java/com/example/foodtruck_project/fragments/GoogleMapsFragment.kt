@@ -1,15 +1,11 @@
 package com.example.foodtruck_project.fragments
 
-import android.location.Location
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.foodtruck_project.*
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
@@ -32,10 +28,13 @@ class GoogleMapsFragment : Fragment() {
 
 
         for (foodtruck in FoodTruckDataManager.foodtrucks) {
+
+            //ändra t latlng så första raden kan tas bort
             val currentFoodTruck = LatLng(foodtruck.latitude, foodtruck.longitude)
-            googleMap.addMarker(
+            val mark = googleMap.addMarker(
                 MarkerOptions().position(currentFoodTruck).title("${foodtruck.name}")
             )
+         //   mark?.tag = foodtruck
         }
 
         val currentLocation = LatLng(59.31118, 18.03002)
@@ -50,6 +49,9 @@ class GoogleMapsFragment : Fragment() {
             }
         }
 
+        //val adapter = FoodTruckWindowAdapter(this)
+       // googleMap.setInfoWindowAdapter(adapter)
+
 
 
         googleMap.setOnMarkerClickListener { // Här ska man visa upp foodtrucken vars pin är tryckt på
@@ -58,8 +60,9 @@ class GoogleMapsFragment : Fragment() {
 
         //    (activity as MainActivity?)?.addFragment()
 
-            val yourLocation = LatLng(59.31037749894223, 18.025368727268727)
-            googleMap.addMarker(MarkerOptions().position(yourLocation).title("Du klickade på en marker"))
+            val marker = LatLng(59.31037749894223, 18.025368727268727)
+            googleMap.addMarker(MarkerOptions().position(marker).title("Du klickade på en marker"))
+            //.snippet("vackert här")
             false
         }
     }

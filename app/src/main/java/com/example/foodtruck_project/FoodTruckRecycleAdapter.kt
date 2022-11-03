@@ -8,10 +8,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.content.ContextCompat.startActivity
-import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
-import com.example.foodtruck_project.fragments.GoogleMapsFragment
 
 class FoodTruckRecycleAdapter(val context: Context, private val foodtrucks: List<FoodTruck>) :
     RecyclerView.Adapter<FoodTruckRecycleAdapter.ViewHolder>() {
@@ -27,17 +24,18 @@ class FoodTruckRecycleAdapter(val context: Context, private val foodtrucks: List
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val foodTruck = foodtrucks[position]
         holder.nameView.text = foodTruck.name
-        holder.openHoursView.text = foodTruck.hours
+        holder.openHoursView.text = foodTruck.openHours
 
-        if (foodTruck.truckImage != null) {
-            holder.foodTruckImageView.setImageResource(foodTruck.truckImage!!)
-        }
-        val menuImage = foodTruck.menuImage
+
+        //här ska menyn i form av text visas upp ist för bild
+       /* val menuImage = foodTruck.menuImage
         holder.menuButton.setOnClickListener {
             val intent = Intent(context, FoodTruckMenuActivity::class.java)
             intent.putExtra("menuImage", menuImage)
             context.startActivity(intent)
         }
+
+        */
         holder.mapButton.setOnClickListener {
             val intent = Intent(context, MainActivity::class.java)
             foodTruck.showMe = true
