@@ -4,9 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
 import com.example.foodtruck_project.databinding.ActivitySignUpBinding
-import com.example.foodtruck_project.fragments.GoogleMapsFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 
@@ -68,11 +66,11 @@ class SignUpActivity : AppCompatActivity() {
         navigationMenu.setOnItemSelectedListener {
             when(it.itemId) {
                 R.id.ic_mapexplore -> {
-                    val intent = Intent(this, MainActivity::class.java)
+                    val intent = Intent(this, GoogleMapsActivity::class.java)
                     startActivity(intent)
                 }
                 R.id.ic_searchpref -> {
-                    val intent = Intent(this,CategoriesActivity::class.java)
+                    val intent = Intent(this, CategoriesActivity::class.java)
                     startActivity(intent)
                 }
                 R.id.ic_accountprofile -> {
