@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ImageButton
 import android.widget.ImageView
+import android.widget.TextView
 
 class FoodTruckMenuActivity : AppCompatActivity() {
 
@@ -11,12 +12,16 @@ class FoodTruckMenuActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_food_truck_menu)
 
-        val menuImage = intent.getIntExtra("menuImage", 0)
+        val menuText = intent.getStringExtra("menuText")
+        if (menuText != null) {
+            val menuTextView = findViewById<TextView>(R.id.truckMenuTextView)
+            menuTextView.setText(menuText)
+        }
 
-        if (menuImage != 0) {
-
-            val menuImageView = findViewById<ImageView>(R.id.menuImageView)
-            menuImageView.setImageResource(menuImage)
+        val truckName = intent.getStringExtra("truckName")
+        if (truckName != null) {
+            val truckTextView = findViewById<TextView>(R.id.truckNameTextView)
+            truckTextView.setText(truckName)
         }
 
         val backButton = findViewById<ImageButton>(R.id.backImageButton)

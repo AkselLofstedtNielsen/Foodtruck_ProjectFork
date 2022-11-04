@@ -8,7 +8,7 @@ class FoodTruck(
     var longitude: Double,
     var truckImage: Int? = null,
     var category: String,
-    var menuImage: Int? = null,
+    var menu: String,
     var showMe: Boolean = false
 ) {
 
