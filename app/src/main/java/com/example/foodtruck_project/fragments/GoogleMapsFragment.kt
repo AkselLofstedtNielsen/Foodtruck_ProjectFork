@@ -1,6 +1,7 @@
 package com.example.foodtruck_project.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +12,10 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.Query
+import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.delay
 
 
 class GoogleMapsFragment : Fragment() {
@@ -29,42 +34,54 @@ class GoogleMapsFragment : Fragment() {
 
         for (foodtruck in FoodTruckDataManager.foodtrucks) {
 
+            Log.d("påp", "3")
+
             //ändra t latlng så första raden kan tas bort
             val currentFoodTruck = LatLng(foodtruck.latitude, foodtruck.longitude)
             val mark = googleMap.addMarker(
                 MarkerOptions().position(currentFoodTruck).title("${foodtruck.name}")
             )
-         //   mark?.tag = foodtruck
+            //   mark?.tag = foodtruck
         }
+
 
         val currentLocation = LatLng(59.31118, 18.03002)
         googleMap.addMarker(MarkerOptions().position(currentLocation).title("Din plats"))
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 15f))
-
+        for (foodtruck in FoodTruckDataManager.foodtrucks) {
+            Log.d("hello", "${foodtruck.name}, ${foodtruck.openHours}, ${foodtruck.latitude}")
+        }
         for (foodtruck in FoodTruckDataManager.foodtrucks) {
 
             if (foodtruck.showMe) {
-                googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(foodtruck.latitude, foodtruck.longitude), 17f))
+                googleMap.moveCamera(
+                    CameraUpdateFactory.newLatLngZoom(
+                        LatLng(
+                            foodtruck.latitude,
+                            foodtruck.longitude
+                        ), 17f
+                    )
+                )
                 foodtruck.showMe = false
             }
         }
 
         //val adapter = FoodTruckWindowAdapter(this)
-       // googleMap.setInfoWindowAdapter(adapter)
-
+        // googleMap.setInfoWindowAdapter(adapter)
 
 
         googleMap.setOnMarkerClickListener { // Här ska man visa upp foodtrucken vars pin är tryckt på
             //atm läggs bara en pin till för att visa på funktion
 
 
-        //    (activity as MainActivity?)?.addFragment()
+            //    (activity as MainActivity?)?.addFragment()
 
             val marker = LatLng(59.31037749894223, 18.025368727268727)
             googleMap.addMarker(MarkerOptions().position(marker).title("Du klickade på en marker"))
             //.snippet("vackert här")
             false
         }
+
     }
 
     override fun onCreateView(
@@ -77,7 +94,6 @@ class GoogleMapsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
 
 
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?

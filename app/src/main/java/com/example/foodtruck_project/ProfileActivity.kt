@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.*
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -109,13 +108,13 @@ class ProfileActivity : AppCompatActivity() {
                 .addOnSuccessListener { document ->
                     if (document != null) {
 
-                        val foodtruck = document.toObjects(items::class.java)
+                        val item = document.toObjects(items::class.java)
 
-                        val name = foodtruck[0].name
-                        val openHours = foodtruck[0].openHours
-                        val latitude = foodtruck[0].latitude
-                        val longitude = foodtruck[0].longitude
-                        val category = foodtruck[0].category
+                        val name = item[0].name
+                        val openHours = item[0].openHours
+                        val latitude = item[0].latitude
+                        val longitude = item[0].longitude
+                        val category = item[0].category
                         Log.d("profil", "$name, $openHours, $latitude, $longitude, $category")
 
                         nameView.text = name

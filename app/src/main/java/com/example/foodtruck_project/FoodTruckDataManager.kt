@@ -1,10 +1,14 @@
 package com.example.foodtruck_project
 
+import android.os.Build
 import android.util.Log
+import com.google.android.gms.tasks.CancellationTokenSource
+import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.Query
 import com.google.firebase.ktx.Firebase
-import com.google.type.LatLng
+import kotlinx.coroutines.*
+import kotlinx.coroutines.tasks.await
 
 object FoodTruckDataManager {
 
@@ -16,65 +20,70 @@ object FoodTruckDataManager {
 
     fun searchFoodTrucks(foodType: String): List<FoodTruck> {
         //sökning bör göras av en DB-fråga
-        if (foodType == "All Food")
-            return foodtrucks
+        return if (foodType == "All Food")
+            foodtrucks
         else {
             val filteredFoodTrucks = foodtrucks.filter { foodTruck ->
                 foodTruck.category == foodType
             }
-            return filteredFoodTrucks
+            filteredFoodTrucks
         }
     }
 
 
-    fun createMockData() {
+    private fun createMockData() {
 
         auth = Firebase.auth
-
-        var name = ""
-        var openHours = ""
-        var latitude = 0.0
-        var longitude = 0.0
-        var category = ""
 
         val user = auth.currentUser
 
         if (user != null) {
 
-            val docRef = db.collection("users")
-                .document(user.uid)
-                .collection("Items")
-                .orderBy("date", Query.Direction.DESCENDING)
-                .limit(1)
+            Log.d("påp", "0")
 
-            docRef.get()
-                .addOnSuccessListener { document ->
-                    if (document != null) {
+            val docRef =
+                db.collection("users")
+                    .document(user.uid)
+                    .collection("Items")
+                    .orderBy("date", Query.Direction.DESCENDING)
+                    .limit(1)
 
-                        val foodtruck = document.toObjects(items::class.java)
+            Log.d("påp", "0.5")
 
-                         name = foodtruck[0].name.toString()
-                         openHours = foodtruck[0].openHours.toString()
-                         latitude = foodtruck[0].latitude
-                         longitude = foodtruck[0].longitude
-                         category = foodtruck[0].category
+            docRef.get().addOnSuccessListener { document ->
+                if (document != null) {
 
-                        Log.d("dök", "$name, $openHours, $latitude, $longitude, $category ")
+                    Log.d("påp", "1")
 
-                    } else {
-                        Log.d("!!!", "No such document")
-                    }
-                    //   Log.d("juj", "$name, $openHours, $category")
+                    val item = document.toObjects(items::class.java)
+
+                    val name = item[0].name.toString()
+                    val openHours = item[0].openHours.toString()
+                    val latitude = item[0].latitude
+                    val longitude = item[0].longitude
+                    val category = item[0].category
+
+
+                    foodtrucks.add(
+                        FoodTruck(
+                            name,
+                            openHours,
+                            latitude,
+                            longitude,
+                            category = category
+                        )
+                    )
+                    Log.d("påp", "1.5")
+
+
+                    //  Log.d("dök", "$name, $openHours, $latitude, $longitude, $category ")
+
+                } else {
+                    Log.d("!!!", "No such document")
                 }
+            }
         }
-        foodtrucks.add(FoodTruck(
-            name,
-            openHours,
-            latitude,
-            longitude,
-            category = category
 
-        ))
         foodtrucks.add(
             FoodTruck(
                 "Raan a haan thai food",
@@ -148,13 +157,17 @@ object FoodTruckDataManager {
                 category = "Italian"
             )
         )
-
+        Log.d("påp", "2")
         for (foodtruck in foodtrucks) {
             Log.d("död", "${foodtruck.name}, ${foodtruck.openHours}, ${foodtruck.latitude}")
         }
 
     }
+
+
 }
+
+
 
 
 
