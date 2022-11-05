@@ -1,34 +1,53 @@
 package com.example.foodtruck_project
 
-import android.content.Intent
 import android.util.Log
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.firestore.ktx.toObject
-import com.google.firebase.ktx.Firebase
+import com.google.firebase.firestore.DocumentSnapshot
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.tasks.await
 
 object FoodTruckDataManager {
 
-    val foodtrucks = mutableListOf<FoodTruck>()
+    private fun getFoodTrucksFromDB(): List<FoodTruck> {
+        val foodTrucksFromDB = mutableListOf<FoodTruck>()
 
-    init {
-        createMockData()
+        runBlocking { // we need the DB results when calling this method, so we use await and skip the DB listeners.
+            // Otherwise the foodTrucksFromDB is filled after the activity is drawn to the user
+            val itemsFromDb: List<FoodTruck> = db.collectionGroup("Items")
+                .get()
+                .await()
+                .documents
+                .map { itemDocument ->
+                    //For now, we are not validating the data from the DB, defaults value are used
+                    //TODO should we only show food trucks with complete data?
+                    FoodTruck(
+                        name = itemDocument.getString("name") ?: "Food truck name not available",
+                        hours = itemDocument.getString("openHours") ?: "Food truck open hours not available",
+                        latitude = itemDocument.getDouble("latitude") ?: 0.0,
+                        longitude = itemDocument.getDouble("longitude") ?: 0.0,
+                        category = itemDocument.getString("category") ?: "Food truck categoy not available",
+                        menu = itemDocument.getString("menu") ?: "Food truck menus not available",
+                        showMe = true
+                    )
+                }
+            foodTrucksFromDB.addAll(itemsFromDb)
+        }
+
+        return foodTrucksFromDB
     }
 
     fun searchFoodTrucks(foodType: String): List<FoodTruck> {
-        //sökning bör göras av en DB-fråga
-        if (foodType == "All Food")
-            return foodtrucks
-        else {
-            val filteredFoodTrucks = foodtrucks.filter { foodTruck ->
+        val foodTrucks = getFoodTrucksFromDB() // eller  createMockData()
+        if (foodType == "All Food") {
+            return foodTrucks
+        } else {
+            val filteredFoodTrucks = foodTrucks.filter { foodTruck ->
                 foodTruck.category == foodType
             }
             return filteredFoodTrucks
         }
     }
 
-    private fun createMockData() {
+    private fun createMockData(): List<FoodTruck> {
 
         //här gå igenom alla users och hämta ut det första dokumentet, sorterat på tid
 
@@ -91,6 +110,7 @@ object FoodTruckDataManager {
 
          */
 
+        val foodtrucks = mutableListOf<FoodTruck>()
         foodtrucks.add(
             FoodTruck(
                 "Raan a haan thai food",
@@ -156,7 +176,7 @@ object FoodTruckDataManager {
 
         foodtrucks.add(
             FoodTruck(
-                "Yalla kebab och falafel",
+                "Fast food delux",
                 "11-22",
                 59.30618100093423,
                 18.03292201418479,
@@ -178,7 +198,7 @@ object FoodTruckDataManager {
         for (foodtruck in foodtrucks) {
             Log.d("ded", "${foodtruck.name}, ${foodtruck.hours}, ${foodtruck.latitude}")
         }
-
+        return foodtrucks
     }
 }
 

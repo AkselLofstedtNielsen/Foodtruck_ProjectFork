@@ -34,7 +34,7 @@ class ProfileActivity : AppCompatActivity() {
             latitudeView.text = (result.data?.getStringExtra("latitude")).toString()
             longitudeView.text = (result.data?.getStringExtra("longitude")).toString()
             categoryView.text = (result.data?.getStringExtra("category")).toString()
-            val item = items(
+            val item = Items(
                 name = nameView.text.toString(),
                 openHours = openHoursView.text.toString(),
                 latitude = (latitudeView.text as String).toDouble(),
@@ -60,7 +60,6 @@ class ProfileActivity : AppCompatActivity() {
         database = Firebase.firestore
 
         auth = Firebase.auth
-
        // auth = FirebaseAuth.getInstance()
 
         val user = auth.currentUser

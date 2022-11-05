@@ -22,31 +22,32 @@
         android:id="@+id/fixedMenuTextView"
         android:layout_width="186dp"
         android:layout_height="46dp"
-        android:layout_marginTop="248dp"
-        android:hint="Menu skylt"
+        android:layout_marginTop="16dp"
+        android:hint="Menu"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.208"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/truckNameTextView" />
 
     <TextView
         android:id="@+id/truckNameTextView"
-        android:layout_width="186dp"
-        android:layout_height="66dp"
-        android:layout_marginStart="68dp"
-        android:layout_marginTop="104dp"
+        android:layout_width="317dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="84dp"
         android:hint="Name of the food truck"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/truckMenuTextView"
-        android:layout_width="256dp"
-        android:layout_height="100dp"
-        android:layout_marginTop="96dp"
+        android:layout_width="331dp"
+        android:layout_height="408dp"
+        android:layout_marginTop="16dp"
         android:hint="The menu here"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintHorizontal_bias="0.587"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/fixedMenuTextView" />
 
