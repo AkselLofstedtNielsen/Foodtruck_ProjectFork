@@ -1,14 +1,8 @@
 package com.example.foodtruck_project
 
-import android.os.Build
 import android.util.Log
-import com.google.android.gms.tasks.CancellationTokenSource
-import com.google.android.gms.tasks.Task
-import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.Query
-import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.*
-import kotlinx.coroutines.tasks.await
 
 object FoodTruckDataManager {
 
@@ -16,6 +10,7 @@ object FoodTruckDataManager {
 
     init {
         createMockData()
+
     }
 
     fun searchFoodTrucks(foodType: String): List<FoodTruck> {
@@ -33,56 +28,56 @@ object FoodTruckDataManager {
 
     private fun createMockData() {
 
-        auth = Firebase.auth
 
         val user = auth.currentUser
 
-        if (user != null) {
+            if (user != null) {
 
-            Log.d("påp", "0")
+                Log.d("påp", "0")
 
-            val docRef =
-                db.collection("users")
-                    .document(user.uid)
-                    .collection("Items")
-                    .orderBy("date", Query.Direction.DESCENDING)
-                    .limit(1)
+                val docRef =
+                    db.collection("users")
+                        .document(user.uid)
+                        .collection("Items")
+                        .orderBy("date", Query.Direction.DESCENDING)
+                        .limit(1)
 
-            Log.d("påp", "0.5")
+                Log.d("påp", "0.5")
 
-            docRef.get().addOnSuccessListener { document ->
-                if (document != null) {
+                docRef.get().addOnSuccessListener { document ->
+                    if (document != null) {
 
-                    Log.d("påp", "1")
+                        Log.d("påp", "1")
 
-                    val item = document.toObjects(items::class.java)
+                        val item = document.toObjects(items::class.java)
 
-                    val name = item[0].name.toString()
-                    val openHours = item[0].openHours.toString()
-                    val latitude = item[0].latitude
-                    val longitude = item[0].longitude
-                    val category = item[0].category
+                        val name = item[0].name.toString()
+                        val openHours = item[0].openHours.toString()
+                        val latitude = item[0].latitude
+                        val longitude = item[0].longitude
+                        val category = item[0].category
 
 
-                    foodtrucks.add(
-                        FoodTruck(
-                            name,
-                            openHours,
-                            latitude,
-                            longitude,
-                            category = category
+                        foodtrucks.add(
+                            FoodTruck(
+                                name,
+                                openHours,
+                                latitude,
+                                longitude,
+                                category = category
+                            )
                         )
-                    )
-                    Log.d("påp", "1.5")
+                        Log.d("påp", "1.5")
 
 
-                    //  Log.d("dök", "$name, $openHours, $latitude, $longitude, $category ")
+                        //  Log.d("dök", "$name, $openHours, $latitude, $longitude, $category ")
 
-                } else {
-                    Log.d("!!!", "No such document")
+                    } else {
+                        Log.d("!!!", "No such document")
+                    }
                 }
             }
-        }
+
 
         foodtrucks.add(
             FoodTruck(

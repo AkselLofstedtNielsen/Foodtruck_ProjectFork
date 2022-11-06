@@ -20,10 +20,15 @@ class SignInActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        auth = FirebaseAuth.getInstance();
+        auth = FirebaseAuth.getInstance()
 
-        if (auth.getCurrentUser() != null) {
+        val user = auth.currentUser
+
+
+
+        if (user != null) {
             // användaren signar in (getCurrentUser() kommer att bli null om inte signad in.
+
             val intent = Intent(this, ProfileActivity::class.java);
             startActivity(intent);
             finish();

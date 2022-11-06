@@ -27,7 +27,7 @@ class ProfileActivity : AppCompatActivity() {
 
     lateinit var database: FirebaseFirestore
     lateinit var auth: FirebaseAuth
-    private lateinit var logout : Button
+    private lateinit var logout: Button
 
     private var getContent =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
@@ -47,7 +47,6 @@ class ProfileActivity : AppCompatActivity() {
                         longitude = (longitudeView.text as String).toDouble(),
                         category = categoryView.text.toString(),
                         date = DateTimeFormatter.ISO_INSTANT.format(Instant.now())
-
                     )
                 } else {
                     TODO("VERSION.SDK_INT < O")
@@ -57,7 +56,7 @@ class ProfileActivity : AppCompatActivity() {
 
             Log.d("!?!hej", "Datum: ${item.date}")
             val user = auth.currentUser
-            
+
             if (user != null) {
                 Log.d("köl", ":)))")
 
@@ -65,14 +64,9 @@ class ProfileActivity : AppCompatActivity() {
                     .addOnCompleteListener {
                         Log.d("!!!", "add item, ${user}")
                     }
-            }else{
+            } else {
                 Log.d("köl", ":<")
             }
-          /*  if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                saveData()
-            }
-
-           */
 
         }
 
@@ -85,9 +79,9 @@ class ProfileActivity : AppCompatActivity() {
 
         auth = Firebase.auth
 
-       // auth = FirebaseAuth.getInstance()
-
         val user = auth.currentUser
+
+
         nameView = findViewById(R.id.nameView)
         openHoursView = findViewById(R.id.openHoursView)
         longitudeView = findViewById(R.id.longitudeView)
@@ -96,7 +90,7 @@ class ProfileActivity : AppCompatActivity() {
 
         //här hämta värden från firebase och sätta in i textfälten ovan
 
-        if(user != null) {
+        if (user != null) {
 
             val docRef = db.collection("users")
                 .document(user.uid)
@@ -164,44 +158,6 @@ class ProfileActivity : AppCompatActivity() {
         getContent.launch(intent)
 
     }
-
-
-
-   /* fun saveData(){
-        var item =
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                items(
-                    name = nameView.text.toString(),
-                    openHours = openHoursView.text.toString(),
-                    latitude = (latitudeView.text as String).toDouble(),
-                    longitude = (longitudeView.text as String).toDouble(),
-                    category = categoryView.text.toString(),
-                    date = DateTimeFormatter.ISO_INSTANT.format(Instant.now())
-
-                )
-            } else {
-                TODO("VERSION.SDK_INT < O")
-            }
-
-
-        Log.d("!?!hej", "Datum: ${item.date}")
-        val user = auth.currentUser
-
-
-        if (user != null) {
-            Log.d("köl", ":)))")
-            database.collection("users").document("c1QQLtE3hiOcUCHYqykIm2V2u313").collection("Items").add(item)
-                .addOnCompleteListener {
-                    Log.d("!!!", "add item, ${user}")
-                }
-        }else{
-            Log.d("köl", ":<")
-        }
-    }
-
-    */
-
-
 
 }
 

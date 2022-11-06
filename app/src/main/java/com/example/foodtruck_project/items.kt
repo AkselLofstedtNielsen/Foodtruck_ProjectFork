@@ -11,7 +11,7 @@ data class items (@DocumentId var DocumentId : String? = null,
                   var longitude: Double = 0.0,
                   var category: String = "",
                   var menu: String? = null,
-                  var date: String = ""
+                  var date: String = "",
                   )
 
 
