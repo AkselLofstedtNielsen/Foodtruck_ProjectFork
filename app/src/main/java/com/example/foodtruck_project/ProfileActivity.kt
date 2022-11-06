@@ -21,6 +21,7 @@ class ProfileActivity : AppCompatActivity() {
     lateinit var latitudeView: TextView
     lateinit var longitudeView: TextView
     lateinit var categoryView: TextView
+    lateinit var menuTextView: TextView
 
     lateinit var database: FirebaseFirestore
     lateinit var auth: FirebaseAuth
@@ -34,12 +35,14 @@ class ProfileActivity : AppCompatActivity() {
             latitudeView.text = (result.data?.getStringExtra("latitude")).toString()
             longitudeView.text = (result.data?.getStringExtra("longitude")).toString()
             categoryView.text = (result.data?.getStringExtra("category")).toString()
+            menuTextView.text = (result.data?.getStringExtra("menu")).toString()
             val item = Items(
                 name = nameView.text.toString(),
                 openHours = openHoursView.text.toString(),
                 latitude = (latitudeView.text as String).toDouble(),
                 longitude = (longitudeView.text as String).toDouble(),
-                category = categoryView.text.toString()
+                category = categoryView.text.toString(),
+                menu = menuTextView.text.toString()
             )
 
             val user = auth.currentUser
@@ -68,6 +71,7 @@ class ProfileActivity : AppCompatActivity() {
         longitudeView = findViewById(R.id.longitudeView)
         latitudeView = findViewById(R.id.latitudeView)
         categoryView = findViewById(R.id.categoryView)
+        menuTextView = findViewById(R.id.menuTextView16)
 
         //här hämta värden från firebase och sätta in i textfälten ovan
         if(user != null) {
@@ -81,6 +85,7 @@ class ProfileActivity : AppCompatActivity() {
                             val latitude = document.getDouble("latitude")
                             val longitude = document.getDouble("longitude")
                             val category = document.getString("category")
+                            val menu = document.getString("menu")
                             Log.d("profil", "$name, $openHours, $latitude, $longitude, $category")
 
                             nameView.text = name
@@ -88,6 +93,7 @@ class ProfileActivity : AppCompatActivity() {
                             latitudeView.text = latitude.toString()
                             longitudeView.text = longitude.toString()
                             categoryView.text = category
+                            menuTextView.text = menu
                         }
 
                     } else {
@@ -157,7 +163,7 @@ class ProfileActivity : AppCompatActivity() {
         intent.putExtra("latitude", latitudeView.text)
         intent.putExtra("longitude", longitudeView.text)
         intent.putExtra("category", categoryView.text)
-
+        intent.putExtra("menu", menuTextView.text)
         getContent.launch(intent)
 
     }
