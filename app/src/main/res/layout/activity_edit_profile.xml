@@ -9,16 +9,19 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ProfileActivity">
+        tools:context=".ProfileActivity"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="-34dp">
 
         <Spinner
             android:id="@+id/categorySpinner"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
             android:layout_marginTop="28dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.088"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+            app:layout_constraintTop_toBottomOf="@+id/menuEditText" />
 
         <TextView
             android:id="@+id/textView18"
@@ -81,16 +84,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/nameEditText" />
 
-        <ImageView
-            android:id="@+id/imageView3"
-            android:layout_width="102dp"
-            android:layout_height="146dp"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="4dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView12"
-            app:srcCompat="@drawable/bronx_menu" />
-
         <TextView
             android:id="@+id/textView12"
             android:layout_width="wrap_content"
@@ -101,16 +94,6 @@
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView18" />
-
-        <ImageView
-            android:id="@+id/imageView4"
-            android:layout_width="102dp"
-            android:layout_height="146dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="4dp"
-            app:layout_constraintStart_toEndOf="@+id/imageView3"
-            app:layout_constraintTop_toBottomOf="@+id/textView12"
-            app:srcCompat="@drawable/bronx_menu" />
 
         <TextView
             android:id="@+id/textView14"
@@ -180,6 +163,19 @@
             android:textSize="10sp"
             app:layout_constraintStart_toEndOf="@+id/textView18"
             app:layout_constraintTop_toBottomOf="@+id/latitudeEditText" />
+
+        <EditText
+            android:id="@+id/menuEditText"
+            android:layout_width="281dp"
+            android:layout_height="136dp"
+            android:layout_marginTop="20dp"
+            android:ems="10"
+            android:gravity="start|top"
+            android:inputType="textMultiLine"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.461"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView12" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -20,6 +20,7 @@ class EditProfileActivity : AppCompatActivity() {
     lateinit var latitudeEditText: EditText
     lateinit var longitudeEditText: EditText
     lateinit var categorySpinner: Spinner
+    lateinit var menuEditText: TextView
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,6 +32,7 @@ class EditProfileActivity : AppCompatActivity() {
         val latitude = intent.getStringExtra("latitude")
         val longitude = intent.getStringExtra("longitude")
         val category = intent.getStringExtra("category")
+        val menu = intent.getStringExtra("menu")
 
         nameEditText = findViewById(R.id.nameEditText)
         nameEditText.setText(foodTruckName)
@@ -44,10 +46,14 @@ class EditProfileActivity : AppCompatActivity() {
         longitudeEditText = findViewById(R.id.longitudeEditText)
         longitudeEditText.setText(longitude)
 
-        nameEditText.text.clear()
-        openHoursEditText.text.clear()
-        latitudeEditText.text.clear()
-        longitudeEditText.text.clear()
+        menuEditText = findViewById(R.id.menuEditText)
+        menuEditText.setText(menu)
+
+//        nameEditText.text.clear()
+//        openHoursEditText.text.clear()
+//        latitudeEditText.text.clear()
+//        longitudeEditText.text.clear()
+//        menuEditText.text = ""
 
         val backButton = findViewById<ImageButton>(R.id.backButton)
         backButton.setOnClickListener{
@@ -82,6 +88,7 @@ class EditProfileActivity : AppCompatActivity() {
         intent.putExtra("openHours", openHoursEditText.text.toString())
         intent.putExtra("latitude", latitudeEditText.text.toString())
         intent.putExtra("longitude", longitudeEditText.text.toString())
+        intent.putExtra("menu", menuEditText.text.toString())
        setResult(Activity.RESULT_OK, intent)
 
 
