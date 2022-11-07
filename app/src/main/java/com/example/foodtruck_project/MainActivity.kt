@@ -98,63 +98,6 @@ class MainActivity : AppCompatActivity() {
             true
         }
 
-
-        locationProvider = LocationServices.getFusedLocationProviderClient(this)
-        locationRequest = createLocationRequest()
-        locationCallback = object : LocationCallback() {
-            override fun onLocationResult(locationResult: LocationResult) {
-                for (location in locationResult.locations) {
-                    // Log.d("!!!","lat: ${location.latitude}, lng: ${location.longitude}")
-
-                }
-            }
-        }
-
-        if (ActivityCompat.checkSelfPermission(
-                this,
-                android.Manifest.permission.ACCESS_FINE_LOCATION
-            )
-            != PackageManager.PERMISSION_GRANTED
-        ) {
-            ActivityCompat.requestPermissions(
-                this,
-                arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION),
-                REQUEST_LOCATION
-            )
-
-
-        } else {
-            // Log.d("!!!","before startLocation")
-            startLocationUpdates()
-        }
-
-        navigationMenu = findViewById(R.id.bottom_navigation)
-        replaceFragment(GoogleMapsFragment)
-
-        navigationMenu.setOnItemSelectedListener {
-            when (it.itemId) {
-                R.id.ic_mapexplore -> {
-                    replaceFragment(GoogleMapsFragment)
-                }
-                R.id.ic_searchpref -> {
-                    val intent = Intent(this, CategoriesActivity::class.java)
-                    startActivity(intent)
-                }
-                R.id.ic_accountprofile -> {
-                    auth = FirebaseAuth.getInstance()
-
-                    if (auth.currentUser != null) {
-                        // Profile user is signed in (getCurrentUser() will be null if not signed in
-                        val intent = Intent(this, ProfileActivity::class.java)
-                        startActivity(intent)
-                    } else {
-                        val intent = Intent(this, SignInActivity::class.java)
-
-                    }
-                }
-            }
-            true
-        }
     }
 
     fun startLocationUpdates() {

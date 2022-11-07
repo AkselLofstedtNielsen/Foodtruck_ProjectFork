@@ -37,7 +37,7 @@ class ProfileActivity : AppCompatActivity() {
             latitudeView.text = (result.data?.getStringExtra("latitude")).toString()
             longitudeView.text = (result.data?.getStringExtra("longitude")).toString()
             categoryView.text = (result.data?.getStringExtra("category")).toString()
-
+            menuTextView.text = (result.data?.getStringExtra("menu")).toString()
 
             var item =
 
@@ -48,7 +48,8 @@ class ProfileActivity : AppCompatActivity() {
                         latitude = (latitudeView.text as String).toDouble(),
                         longitude = (longitudeView.text as String).toDouble(),
                         category = categoryView.text.toString(),
-                        date = DateTimeFormatter.ISO_INSTANT.format(Instant.now())
+                        date = DateTimeFormatter.ISO_INSTANT.format(Instant.now()),
+                        menu = menuTextView.text.toString(),
                     )
                 } else {
                     TODO("VERSION.SDK_INT < O")
@@ -90,6 +91,8 @@ class ProfileActivity : AppCompatActivity() {
             latitudeView.text = ""
             longitudeView.text = ""
             categoryView.text = ""
+            menuTextView.text = ""
+
         } else if (user != null) {
 
             val docRef = db.collection("users")
@@ -105,6 +108,7 @@ class ProfileActivity : AppCompatActivity() {
                 latitudeView.text = ""
                 longitudeView.text = ""
                 categoryView.text = ""
+                menuTextView.text = ""
             } else {
 
                 docRef.get()
@@ -120,6 +124,7 @@ class ProfileActivity : AppCompatActivity() {
                                 val latitude = item[0].latitude
                                 val longitude = item[0].longitude
                                 val category = item[0].category
+                                val menu = item[0].menu
                                 Log.d(
                                     "profil",
                                     "$name, $openHours, $latitude, $longitude, $category"
@@ -130,6 +135,7 @@ class ProfileActivity : AppCompatActivity() {
                                 latitudeView.text = latitude.toString()
                                 longitudeView.text = longitude.toString()
                                 categoryView.text = category
+                                menuTextView.text = menu
                             }
 
                         } else {
