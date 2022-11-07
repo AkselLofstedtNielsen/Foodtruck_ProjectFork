@@ -24,7 +24,7 @@ class FoodTruckRecycleAdapter(val context: Context, private val foodtrucks: List
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val foodTruck = foodtrucks[position]
         holder.nameView.text = foodTruck.name
-        holder.openHoursView.text = foodTruck.hours
+        holder.openHoursView.text = foodTruck.openHours
 
         if (foodTruck.truckImage != null) {
             holder.foodTruckImageView.setImageResource(foodTruck.truckImage!!)

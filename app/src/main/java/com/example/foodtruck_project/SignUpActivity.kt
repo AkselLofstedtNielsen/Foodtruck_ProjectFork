@@ -10,9 +10,6 @@ import com.google.firebase.auth.FirebaseAuth
 
 class SignUpActivity : AppCompatActivity() {
 
-
-
-
     private lateinit var binding: ActivitySignUpBinding
     private lateinit var firebaseAuth: FirebaseAuth
     lateinit var navigationMenu : BottomNavigationView
@@ -23,7 +20,6 @@ class SignUpActivity : AppCompatActivity() {
 
         binding = ActivitySignUpBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
 
         firebaseAuth = FirebaseAuth.getInstance()
 

@@ -1,15 +1,17 @@
 package com.example.foodtruck_project
 
 import android.util.Log
+import com.google.firebase.firestore.Query
+import kotlinx.coroutines.*
 import com.google.firebase.firestore.DocumentSnapshot
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.tasks.await
 
 object FoodTruckDataManager {
 
+    val foodtrucks = mutableListOf<FoodTruck>()
 
-     fun getFoodTrucksFromDB(): List<FoodTruck> {
-        val foodTrucksFromDB = mutableListOf<FoodTruck>()
+    private fun getFoodTrucksFromDB(): List<FoodTruck> {
 
         runBlocking {
             val itemsFromDb: List<FoodTruck> = db.collectionGroup("Items")
@@ -21,19 +23,30 @@ object FoodTruckDataManager {
 
                     FoodTruck(
                         name = itemDocument.getString("name") ?: "Food truck name not available",
-                        hours = itemDocument.getString("openHours") ?: "Food truck open hours not available",
+                        openHours = itemDocument.getString("openHours")
+                            ?: "Food truck open hours not available",
                         latitude = itemDocument.getDouble("latitude") ?: 0.0,
                         longitude = itemDocument.getDouble("longitude") ?: 0.0,
-                        category = itemDocument.getString("category") ?: "Food truck categoy not available",
-                        menu = itemDocument.getString("menu") ?: "Food truck menus not available",
-                        showMe = true
+                        category = itemDocument.getString("category")
+                            ?: "Food truck categoy not available",
+                        menu = itemDocument.getString("menu") ?: "Food truck menus not available"
                     )
                 }
-            foodTrucksFromDB.addAll(itemsFromDb)
+            foodtrucks.addAll(itemsFromDb)
         }
-
-        return foodTrucksFromDB
+        return foodtrucks
     }
+
+
+
+    init {
+        createMockData()
+        getFoodTrucksFromDB()
+    }
+
+
+
+
 
     fun searchFoodTrucks(foodType: String): List<FoodTruck> {
         val foodTrucks = getFoodTrucksFromDB() // eller  createMockData()
@@ -49,68 +62,6 @@ object FoodTruckDataManager {
 
     private fun createMockData(): List<FoodTruck> {
 
-        //här gå igenom alla users och hämta ut det första dokumentet, sorterat på tid
-
-
-/*
-        db.collection("Items").get()
-            .addOnSuccessListener { result ->
-                for (document in result) {
-                    Log.d("hallå", "${document.id} => ${document.data}")
-                }
-            }
-            .addOnFailureListener { exception ->
-                Log.d("TAG", "Error getting documents: ", exception)
-            }
-
- */
-        /*
-        val docRef =
-            db.collection("users")
-                .document("c1QQLtE3hiOcUCHYqykIm2V2u313")
-                .collection("Items")
-                .document("lvZb96dizT7zqirsjWct")
-
-
-        docRef.get().addOnSuccessListener { document ->
-            if (document != null) {
-
-            /*    val food = document.toObject(items::class.java)
-
-                if (food != null) {
-                    Log.d("hejsan", "${food.name}")
-                }
-
-             */
-                val name = document.getString("name")
-                val openHours = document.getString("openHours")
-                val latitude = document.getDouble("latitude")
-                val longitude = document.getDouble("longitude")
-                val category = document.getString("category")
-                Log.d("!!!", "$name, $openHours, $latitude, $longitude, $category")
-
-                foodtrucks.add(
-
-                    FoodTruck(
-                        name.toString(),
-                        openHours.toString(),
-                        59.3100721082596,
-                        18.030037153004116,
-                        category = category.toString()
-
-                    )
-                )
-                Log.d("ekej", "$name")
-            } else {
-                Log.d("!!!", "No such document")
-            }
-
-            //   Log.d("juj", "$name, $openHours, $category")
-        }
-
-         */
-
-        val foodtrucks = mutableListOf<FoodTruck>()
         foodtrucks.add(
             FoodTruck(
                 "Raan a haan thai food",
@@ -121,8 +72,6 @@ object FoodTruckDataManager {
                 menu = "Thai food menu"
             )
         )
-
-
         foodtrucks.add(
             FoodTruck(
                 "Sonora grill",
@@ -194,13 +143,15 @@ object FoodTruckDataManager {
                 menu = "Italian food menu"
             )
         )
-
-        for (foodtruck in foodtrucks) {
-            Log.d("ded", "${foodtruck.name}, ${foodtruck.hours}, ${foodtruck.latitude}")
-        }
         return foodtrucks
     }
+
+
 }
+
+
+
+
 
 
 

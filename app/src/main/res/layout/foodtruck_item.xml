@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/foodTruck"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
     <TextView
@@ -42,7 +42,7 @@
         android:id="@+id/menuButton"
         android:layout_width="74dp"
         android:layout_height="35dp"
-        android:layout_marginStart="25dp"
+        android:layout_marginStart="28dp"
         android:layout_marginTop="8dp"
         android:backgroundTint="#2196F3"
         android:text="Meny"
@@ -56,7 +56,7 @@
         android:id="@+id/mapButton"
         android:layout_width="129dp"
         android:layout_height="34dp"
-        android:layout_marginStart="25dp"
+        android:layout_marginStart="28dp"
         android:layout_marginTop="4dp"
         android:layout_marginEnd="91dp"
         android:layout_marginBottom="8dp"

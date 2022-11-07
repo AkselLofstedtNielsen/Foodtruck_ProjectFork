@@ -1,6 +1,7 @@
 package com.example.foodtruck_project
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.widget.*
@@ -9,12 +10,14 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import java.time.Instant
+import java.time.format.DateTimeFormatter
 
 
 class ProfileActivity : AppCompatActivity() {
-
 
     lateinit var nameView: TextView
     lateinit var openHoursView: TextView
@@ -25,8 +28,7 @@ class ProfileActivity : AppCompatActivity() {
 
     lateinit var database: FirebaseFirestore
     lateinit var auth: FirebaseAuth
-    private lateinit var logout : Button
-
+    private lateinit var logout: Button
 
     private var getContent =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
@@ -35,24 +37,33 @@ class ProfileActivity : AppCompatActivity() {
             latitudeView.text = (result.data?.getStringExtra("latitude")).toString()
             longitudeView.text = (result.data?.getStringExtra("longitude")).toString()
             categoryView.text = (result.data?.getStringExtra("category")).toString()
-            menuTextView.text = (result.data?.getStringExtra("menu")).toString()
-            val item = Items(
-                name = nameView.text.toString(),
-                openHours = openHoursView.text.toString(),
-                latitude = (latitudeView.text as String).toDouble(),
-                longitude = (longitudeView.text as String).toDouble(),
-                category = categoryView.text.toString(),
-                menu = menuTextView.text.toString()
-            )
+
+
+            var item =
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    Items(
+                        name = nameView.text.toString(),
+                        openHours = openHoursView.text.toString(),
+                        latitude = (latitudeView.text as String).toDouble(),
+                        longitude = (longitudeView.text as String).toDouble(),
+                        category = categoryView.text.toString(),
+                        date = DateTimeFormatter.ISO_INSTANT.format(Instant.now())
+                    )
+                } else {
+                    TODO("VERSION.SDK_INT < O")
+                }
 
             val user = auth.currentUser
 
             if (user != null) {
+
                 database.collection("users").document(user.uid).collection("Items").add(item)
                     .addOnCompleteListener {
-                        Log.d("!!!", "add item")
+                        Log.d("!!!", "add item, ${user}")
                     }
             }
+
         }
 
 
@@ -63,9 +74,9 @@ class ProfileActivity : AppCompatActivity() {
         database = Firebase.firestore
 
         auth = Firebase.auth
-       // auth = FirebaseAuth.getInstance()
 
         val user = auth.currentUser
+
         nameView = findViewById(R.id.nameView)
         openHoursView = findViewById(R.id.openHoursView)
         longitudeView = findViewById(R.id.longitudeView)
@@ -73,65 +84,64 @@ class ProfileActivity : AppCompatActivity() {
         categoryView = findViewById(R.id.categoryView)
         menuTextView = findViewById(R.id.menuTextView16)
 
-        //här hämta värden från firebase och sätta in i textfälten ovan
-        if(user != null) {
+        if (user == null) {
+            nameView.text = ""
+            openHoursView.text = ""
+            latitudeView.text = ""
+            longitudeView.text = ""
+            categoryView.text = ""
+        } else if (user != null) {
 
-            val docRef = db.collection("users").document(user.uid).collection("Items")
-            docRef.addSnapshotListener { snapshot, e ->
-                    if (snapshot != null) {
-                        for (document in snapshot.documents) {
-                            val name = document.getString("name")
-                            val openHours = document.getString("openHours")
-                            val latitude = document.getDouble("latitude")
-                            val longitude = document.getDouble("longitude")
-                            val category = document.getString("category")
-                            val menu = document.getString("menu")
-                            Log.d("profil", "$name, $openHours, $latitude, $longitude, $category")
+            val docRef = db.collection("users")
+                .document(user.uid)
+                .collection("Items")
+                .orderBy("date", Query.Direction.DESCENDING)
+                .limit(1)
+            Log.d("sås", "$docRef")
 
-                            nameView.text = name
-                            openHoursView.text = openHours
-                            latitudeView.text = latitude.toString()
-                            longitudeView.text = longitude.toString()
-                            categoryView.text = category
-                            menuTextView.text = menu
+            if (docRef == null) {
+                nameView.text = ""
+                openHoursView.text = ""
+                latitudeView.text = ""
+                longitudeView.text = ""
+                categoryView.text = ""
+            } else {
+
+                docRef.get()
+                    .addOnSuccessListener { document ->
+
+                        if (document != null) {
+                            val item = document.toObjects(Items::class.java)
+                            Log.d("sås", "$item")
+                            if (item.isNotEmpty()) {
+
+                                val name = item[0].name
+                                val openHours = item[0].openHours
+                                val latitude = item[0].latitude
+                                val longitude = item[0].longitude
+                                val category = item[0].category
+                                Log.d(
+                                    "profil",
+                                    "$name, $openHours, $latitude, $longitude, $category"
+                                )
+
+                                nameView.text = name
+                                openHoursView.text = openHours
+                                latitudeView.text = latitude.toString()
+                                longitudeView.text = longitude.toString()
+                                categoryView.text = category
+                            }
+
+                        } else {
+                            Log.d("!!!", "No such document")
+
                         }
-
-                    } else {
-                        Log.d("!!!", "No such document")
                     }
-                }
-                //.addOnFailureListener { exception ->
-                //    Log.d("!!!", "get failed with ", exception)
-                }
-
-/*        if(user != null) {
-
-            val docRef = db.collection("users").document(user.uid).collection("Items").document("Vu7kXqkStbPg543Nca7a")
-            docRef.get()
-                .addOnSuccessListener { document ->
-                    if (document != null) {
-                        val name = document.getString("name")
-                        val openHours = document.getString("openHours")
-                        val latitude = document.getDouble("latitude")
-                        val longitude = document.getDouble("longitude")
-                        val category = document.getString("category")
-                        Log.d("profil", "$name, $openHours, $latitude, $longitude, $category")
-
-                        nameView.text = name
-                        openHoursView.text = openHours
-                        latitudeView.text = latitude.toString()
-                        longitudeView.text = longitude.toString()
-                        categoryView.text = category
-
-                    } else {
-                        Log.d("!!!", "No such document")
+                    .addOnFailureListener { exception ->
+                        Log.d("!!!", "get failed with ", exception)
                     }
-                }
-                .addOnFailureListener { exception ->
-                    Log.d("!!!", "get failed with ", exception)
-                }
-        }*/
-
+            }
+        }
 
 
         val editButton = findViewById<Button>(R.id.editButton)
@@ -152,7 +162,6 @@ class ProfileActivity : AppCompatActivity() {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
-
     }
 
     fun edit() {
@@ -168,9 +177,9 @@ class ProfileActivity : AppCompatActivity() {
 
     }
 
-
-
 }
+
+
 
 
 
