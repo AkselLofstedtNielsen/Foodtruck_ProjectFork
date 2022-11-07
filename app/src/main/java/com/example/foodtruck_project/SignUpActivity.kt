@@ -66,7 +66,7 @@ class SignUpActivity : AppCompatActivity() {
         navigationMenu.setOnItemSelectedListener {
             when(it.itemId) {
                 R.id.ic_mapexplore -> {
-                    val intent = Intent(this, GoogleMapsActivity::class.java)
+                    val intent = Intent(this, MainActivity::class.java)
                     startActivity(intent)
                 }
                 R.id.ic_searchpref -> {
