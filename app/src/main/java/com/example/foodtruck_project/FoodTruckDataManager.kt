@@ -7,7 +7,8 @@ import kotlinx.coroutines.tasks.await
 
 object FoodTruckDataManager {
 
-    private fun getFoodTrucksFromDB(): List<FoodTruck> {
+
+     fun getFoodTrucksFromDB(): List<FoodTruck> {
         val foodTrucksFromDB = mutableListOf<FoodTruck>()
 
         runBlocking {
