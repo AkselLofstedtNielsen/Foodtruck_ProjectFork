@@ -12,17 +12,15 @@ object FoodTruckDataManager {
     val foodtrucks = mutableListOf<FoodTruck>()
 
     private fun getFoodTrucksFromDB(): List<FoodTruck> {
-       // val foodTrucksFromDB = mutableListOf<FoodTruck>()
 
-        runBlocking { // we need the DB results when calling this method, so we use await and skip the DB listeners.
-            // Otherwise the foodTrucksFromDB is filled after the activity is drawn to the user
+        runBlocking {
             val itemsFromDb: List<FoodTruck> = db.collectionGroup("Items")
                 .get()
                 .await()
                 .documents
                 .map { itemDocument ->
-                    //For now, we are not validating the data from the DB, defaults value are used
-                    //TODO should we only show food trucks with complete data?
+
+
                     FoodTruck(
                         name = itemDocument.getString("name") ?: "Food truck name not available",
                         openHours = itemDocument.getString("openHours")

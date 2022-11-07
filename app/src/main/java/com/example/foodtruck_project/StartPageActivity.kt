@@ -15,7 +15,7 @@ class StartPageActivity : AppCompatActivity() {
         FoodTruckDataManager.foodtrucks
 
         startPage.setOnClickListener {
-            val intent = Intent(this, CategoriesActivity::class.java)
+            val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
     }

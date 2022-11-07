@@ -24,6 +24,7 @@ class ProfileActivity : AppCompatActivity() {
     lateinit var latitudeView: TextView
     lateinit var longitudeView: TextView
     lateinit var categoryView: TextView
+    lateinit var menuTextView: TextView
 
     lateinit var database: FirebaseFirestore
     lateinit var auth: FirebaseAuth
@@ -81,8 +82,8 @@ class ProfileActivity : AppCompatActivity() {
         longitudeView = findViewById(R.id.longitudeView)
         latitudeView = findViewById(R.id.latitudeView)
         categoryView = findViewById(R.id.categoryView)
+        menuTextView = findViewById(R.id.menuTextView16)
 
-        Log.d("sås", "$user")
         if (user == null) {
             nameView.text = ""
             openHoursView.text = ""
@@ -133,6 +134,7 @@ class ProfileActivity : AppCompatActivity() {
 
                         } else {
                             Log.d("!!!", "No such document")
+
                         }
                     }
                     .addOnFailureListener { exception ->
@@ -170,7 +172,7 @@ class ProfileActivity : AppCompatActivity() {
         intent.putExtra("latitude", latitudeView.text)
         intent.putExtra("longitude", longitudeView.text)
         intent.putExtra("category", categoryView.text)
-
+        intent.putExtra("menu", menuTextView.text)
         getContent.launch(intent)
 
     }
