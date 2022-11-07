@@ -6,14 +6,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.foodtruck_project.fragments.GoogleMapsFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 
 class CategoriesActivity : AppCompatActivity() {
     lateinit var dataManager: DataManager
     lateinit var navigationMenu: BottomNavigationView
-    lateinit var GoogleMapsFragment : GoogleMapsFragment
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -32,11 +31,12 @@ class CategoriesActivity : AppCompatActivity() {
 
         navigationMenu.setOnItemSelectedListener {
             when(it.itemId) {
-                R.id.ic_mapexplore ->
-                    replaceFragment(GoogleMapsFragment)
-
+                R.id.ic_mapexplore -> {
+                    val intent = Intent(this, MainActivity::class.java)
+                    startActivity(intent)
+                }
                 R.id.ic_searchpref -> {
-                    val intent = Intent(this,CategoriesActivity::class.java)
+                    val intent = Intent(this, CategoriesActivity::class.java)
                     startActivity(intent)
                 }
                 R.id.ic_accountprofile -> {
@@ -47,7 +47,7 @@ class CategoriesActivity : AppCompatActivity() {
                         val intent = Intent(this, ProfileActivity::class.java);
                         startActivity(intent);
                     } else {
-                        val intent = Intent(this,SignInActivity::class.java)
+                        val intent = Intent(this, SignInActivity::class.java)
                         startActivity(intent)
                     }
                 }

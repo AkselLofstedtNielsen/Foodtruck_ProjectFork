@@ -18,7 +18,6 @@ import com.google.android.gms.location.*
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
-import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
@@ -26,7 +25,6 @@ val db = Firebase.firestore
 var auth = Firebase.auth
 
 class MainActivity : AppCompatActivity() {
-
 
     private val REQUEST_LOCATION = 1
 
@@ -50,7 +48,6 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
-        //locationProvider.requestLocationUpdates(locationRequest,locationCallback, Looper.getMainLooper())
 
         if (ActivityCompat.checkSelfPermission(
                 this,
@@ -70,27 +67,25 @@ class MainActivity : AppCompatActivity() {
             startLocationUpdates()
         }
 
-
-
         navigationMenu = findViewById(R.id.bottom_navigation)
         replaceFragment(GoogleMapsFragment)
 
         navigationMenu.setOnItemSelectedListener {
             when (it.itemId) {
-                R.id.ic_mapexplore ->
+                R.id.ic_mapexplore -> {
                     replaceFragment(GoogleMapsFragment)
-
+                }
                 R.id.ic_searchpref -> {
                     val intent = Intent(this, CategoriesActivity::class.java)
                     startActivity(intent)
                 }
                 R.id.ic_accountprofile -> {
-                    auth = FirebaseAuth.getInstance();
+                    auth = FirebaseAuth.getInstance()
 
-                    if (auth.getCurrentUser() != null) {
+                    if (auth.currentUser != null) {
                         // Profile user is signed in (getCurrentUser() will be null if not signed in
-                        val intent = Intent(this, ProfileActivity::class.java);
-                        startActivity(intent);
+                        val intent = Intent(this, ProfileActivity::class.java)
+                        startActivity(intent)
                     } else {
                         val intent = Intent(this, SignInActivity::class.java)
                         startActivity(intent)
@@ -102,7 +97,6 @@ class MainActivity : AppCompatActivity() {
         }
 
     }
-
 
     fun startLocationUpdates() {
         if (ActivityCompat.checkSelfPermission(
@@ -120,7 +114,6 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-
     fun createLocationRequest() =
         LocationRequest.create().apply {
             interval = 2000
@@ -134,18 +127,6 @@ class MainActivity : AppCompatActivity() {
         transaction.commit()
     }
 
-
-    /*
-     fun addFragment(view : View){
-        val foodtruckFragment = FoodTruckFragment()
-        val transaction = supportFragmentManager.beginTransaction()
-        transaction.add(R.id.foodTruckPopUp, foodtruckFragment, "FoodtruckFragment")
-        transaction.commit()
-         Log.d("!!!", "hej ${foodtruckFragment}, $transaction")
-    }
-
-     */
-
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
@@ -153,7 +134,7 @@ class MainActivity : AppCompatActivity() {
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == REQUEST_LOCATION) {
-            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED){
                 startLocationUpdates()
             }
         }
@@ -162,4 +143,5 @@ class MainActivity : AppCompatActivity() {
     }
 
 }
+
 

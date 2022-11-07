@@ -26,16 +26,19 @@ class FoodTruckRecycleAdapter(val context: Context, private val foodtrucks: List
         holder.nameView.text = foodTruck.name
         holder.openHoursView.text = foodTruck.openHours
 
+        if (foodTruck.truckImage != null) {
+            holder.foodTruckImageView.setImageResource(foodTruck.truckImage!!)
+        }
 
-        //här ska menyn i form av text visas upp ist för bild
-       /* val menuImage = foodTruck.menuImage
+        val menuText = foodTruck.menu
+        val truckName = foodTruck.name
         holder.menuButton.setOnClickListener {
             val intent = Intent(context, FoodTruckMenuActivity::class.java)
-            intent.putExtra("menuImage", menuImage)
+            intent.putExtra("menuText", menuText)
+            intent.putExtra("truckName", truckName)
             context.startActivity(intent)
         }
 
-        */
         holder.mapButton.setOnClickListener {
             val intent = Intent(context, MainActivity::class.java)
             foodTruck.showMe = true

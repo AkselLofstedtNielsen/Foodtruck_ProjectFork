@@ -10,7 +10,8 @@ data class FoodTruck(
     var longitude: Double,
     var category: String,
     var menu: String? = null,
-    var showMe: Boolean = false
+    var showMe: Boolean = false,
+    var truckImage: Int? = null
 ) {
 
 }

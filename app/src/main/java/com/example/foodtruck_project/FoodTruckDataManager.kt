@@ -3,81 +3,66 @@ package com.example.foodtruck_project
 import android.util.Log
 import com.google.firebase.firestore.Query
 import kotlinx.coroutines.*
+import com.google.firebase.firestore.DocumentSnapshot
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.tasks.await
 
 object FoodTruckDataManager {
 
     val foodtrucks = mutableListOf<FoodTruck>()
 
-    init {
-        createMockData()
+    private fun getFoodTrucksFromDB(): List<FoodTruck> {
+       // val foodTrucksFromDB = mutableListOf<FoodTruck>()
 
+        runBlocking { // we need the DB results when calling this method, so we use await and skip the DB listeners.
+            // Otherwise the foodTrucksFromDB is filled after the activity is drawn to the user
+            val itemsFromDb: List<FoodTruck> = db.collectionGroup("Items")
+                .get()
+                .await()
+                .documents
+                .map { itemDocument ->
+                    //For now, we are not validating the data from the DB, defaults value are used
+                    //TODO should we only show food trucks with complete data?
+                    FoodTruck(
+                        name = itemDocument.getString("name") ?: "Food truck name not available",
+                        openHours = itemDocument.getString("openHours")
+                            ?: "Food truck open hours not available",
+                        latitude = itemDocument.getDouble("latitude") ?: 0.0,
+                        longitude = itemDocument.getDouble("longitude") ?: 0.0,
+                        category = itemDocument.getString("category")
+                            ?: "Food truck categoy not available",
+                        menu = itemDocument.getString("menu") ?: "Food truck menus not available"
+                    )
+                }
+            foodtrucks.addAll(itemsFromDb)
+        }
+        return foodtrucks
     }
 
+
+
+    init {
+        createMockData()
+        getFoodTrucksFromDB()
+    }
+
+
+
+
+
     fun searchFoodTrucks(foodType: String): List<FoodTruck> {
-        //sökning bör göras av en DB-fråga
-        return if (foodType == "All Food")
-            foodtrucks
-        else {
-            val filteredFoodTrucks = foodtrucks.filter { foodTruck ->
+        val foodTrucks = getFoodTrucksFromDB() // eller  createMockData()
+        if (foodType == "All Food") {
+            return foodTrucks
+        } else {
+            val filteredFoodTrucks = foodTrucks.filter { foodTruck ->
                 foodTruck.category == foodType
             }
-            filteredFoodTrucks
+            return filteredFoodTrucks
         }
     }
 
-
-    private fun createMockData() {
-
-
-        val user = auth.currentUser
-
-            if (user != null) {
-
-                Log.d("påp", "0")
-
-                val docRef =
-                    db.collection("users")
-                        .document(user.uid)
-                        .collection("Items")
-                        .orderBy("date", Query.Direction.DESCENDING)
-                        .limit(1)
-
-                Log.d("påp", "0.5")
-
-                docRef.get().addOnSuccessListener { document ->
-                    if (document != null) {
-
-                        Log.d("påp", "1")
-
-                        val item = document.toObjects(items::class.java)
-
-                        val name = item[0].name.toString()
-                        val openHours = item[0].openHours.toString()
-                        val latitude = item[0].latitude
-                        val longitude = item[0].longitude
-                        val category = item[0].category
-
-
-                        foodtrucks.add(
-                            FoodTruck(
-                                name,
-                                openHours,
-                                latitude,
-                                longitude,
-                                category = category
-                            )
-                        )
-                        Log.d("påp", "1.5")
-
-
-                        //  Log.d("dök", "$name, $openHours, $latitude, $longitude, $category ")
-
-                    } else {
-                        Log.d("!!!", "No such document")
-                    }
-                }
-            }
-
+    private fun createMockData(): List<FoodTruck> {
 
         foodtrucks.add(
             FoodTruck(
@@ -85,7 +70,8 @@ object FoodTruckDataManager {
                 "11-14",
                 59.307172185658146,
                 18.027411629118248,
-                category = "Asian"
+                category = "Asian",
+                menu = "Thai food menu"
             )
         )
         foodtrucks.add(
@@ -95,6 +81,7 @@ object FoodTruckDataManager {
                 59.31171691896732,
                 18.043566467202066,
                 category = "Mexican",
+                menu = "Mexican food menu"
             )
         )
         foodtrucks.add(
@@ -104,6 +91,7 @@ object FoodTruckDataManager {
                 59.30742285326887,
                 18.029651979181896,
                 category = "American",
+                menu = "American food menu"
             )
         )
         foodtrucks.add(
@@ -112,7 +100,8 @@ object FoodTruckDataManager {
                 "11-18",
                 59.309138072756866,
                 18.02876035836422,
-                category = "American"
+                category = "American",
+                menu = "American food menu2"
             )
         )
         foodtrucks.add(
@@ -121,7 +110,8 @@ object FoodTruckDataManager {
                 "11-20",
                 59.3066057640598,
                 18.02948659658339,
-                category = "Indian"
+                category = "Indian",
+                menu = "Indian food menu"
             )
         )
         foodtrucks.add(
@@ -130,17 +120,19 @@ object FoodTruckDataManager {
                 "11-16",
                 59.311051945233686,
                 18.026927098433156,
-                category = "Indian"
+                category = "Indian",
+                menu = "Indian food menu2"
             )
         )
 
         foodtrucks.add(
             FoodTruck(
-                "Yalla kebab och falafel",
+                "Fast food delux",
                 "11-22",
                 59.30618100093423,
                 18.03292201418479,
-                category = "Fast food"
+                category = "Fast food",
+                menu = "Fast food menu"
             )
         )
         foodtrucks.add(
@@ -149,14 +141,11 @@ object FoodTruckDataManager {
                 "11-15",
                 59.3079305,
                 18.0272796,
-                category = "Italian"
+                category = "Italian",
+                menu = "Italian food menu"
             )
         )
-        Log.d("påp", "2")
-        for (foodtruck in foodtrucks) {
-            Log.d("död", "${foodtruck.name}, ${foodtruck.openHours}, ${foodtruck.latitude}")
-        }
-
+        return foodtrucks
     }
 
 

@@ -37,10 +37,11 @@ class ProfileActivity : AppCompatActivity() {
             longitudeView.text = (result.data?.getStringExtra("longitude")).toString()
             categoryView.text = (result.data?.getStringExtra("category")).toString()
 
+
             var item =
 
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    items(
+                    Items(
                         name = nameView.text.toString(),
                         openHours = openHoursView.text.toString(),
                         latitude = (latitudeView.text as String).toDouble(),
@@ -52,20 +53,14 @@ class ProfileActivity : AppCompatActivity() {
                     TODO("VERSION.SDK_INT < O")
                 }
 
-
-
-            Log.d("!?!hej", "Datum: ${item.date}")
             val user = auth.currentUser
 
             if (user != null) {
-                Log.d("köl", ":)))")
 
                 database.collection("users").document(user.uid).collection("Items").add(item)
                     .addOnCompleteListener {
                         Log.d("!!!", "add item, ${user}")
                     }
-            } else {
-                Log.d("köl", ":<")
             }
 
         }
@@ -81,50 +76,71 @@ class ProfileActivity : AppCompatActivity() {
 
         val user = auth.currentUser
 
-
         nameView = findViewById(R.id.nameView)
         openHoursView = findViewById(R.id.openHoursView)
         longitudeView = findViewById(R.id.longitudeView)
         latitudeView = findViewById(R.id.latitudeView)
         categoryView = findViewById(R.id.categoryView)
 
-        //här hämta värden från firebase och sätta in i textfälten ovan
-
-        if (user != null) {
+        Log.d("sås", "$user")
+        if (user == null) {
+            nameView.text = ""
+            openHoursView.text = ""
+            latitudeView.text = ""
+            longitudeView.text = ""
+            categoryView.text = ""
+        } else if (user != null) {
 
             val docRef = db.collection("users")
                 .document(user.uid)
                 .collection("Items")
                 .orderBy("date", Query.Direction.DESCENDING)
                 .limit(1)
+            Log.d("sås", "$docRef")
 
-            docRef.get()
-                .addOnSuccessListener { document ->
-                    if (document != null) {
+            if (docRef == null) {
+                nameView.text = ""
+                openHoursView.text = ""
+                latitudeView.text = ""
+                longitudeView.text = ""
+                categoryView.text = ""
+            } else {
 
-                        val item = document.toObjects(items::class.java)
+                docRef.get()
+                    .addOnSuccessListener { document ->
 
-                        val name = item[0].name
-                        val openHours = item[0].openHours
-                        val latitude = item[0].latitude
-                        val longitude = item[0].longitude
-                        val category = item[0].category
-                        Log.d("profil", "$name, $openHours, $latitude, $longitude, $category")
+                        if (document != null) {
+                            val item = document.toObjects(Items::class.java)
+                            Log.d("sås", "$item")
+                            if (item.isNotEmpty()) {
 
-                        nameView.text = name
-                        openHoursView.text = openHours
-                        latitudeView.text = latitude.toString()
-                        longitudeView.text = longitude.toString()
-                        categoryView.text = category
+                                val name = item[0].name
+                                val openHours = item[0].openHours
+                                val latitude = item[0].latitude
+                                val longitude = item[0].longitude
+                                val category = item[0].category
+                                Log.d(
+                                    "profil",
+                                    "$name, $openHours, $latitude, $longitude, $category"
+                                )
 
-                    } else {
-                        Log.d("!!!", "No such document")
+                                nameView.text = name
+                                openHoursView.text = openHours
+                                latitudeView.text = latitude.toString()
+                                longitudeView.text = longitude.toString()
+                                categoryView.text = category
+                            }
+
+                        } else {
+                            Log.d("!!!", "No such document")
+                        }
                     }
-                }
-                .addOnFailureListener { exception ->
-                    Log.d("!!!", "get failed with ", exception)
-                }
+                    .addOnFailureListener { exception ->
+                        Log.d("!!!", "get failed with ", exception)
+                    }
+            }
         }
+
 
         val editButton = findViewById<Button>(R.id.editButton)
 
@@ -141,7 +157,7 @@ class ProfileActivity : AppCompatActivity() {
         logout.setOnClickListener {
             Firebase.auth.signOut()
 
-            val intent = Intent(this, MainActivity::class.java);
+            val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
     }
