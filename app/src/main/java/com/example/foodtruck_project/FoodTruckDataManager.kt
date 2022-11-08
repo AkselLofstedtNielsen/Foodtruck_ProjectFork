@@ -9,13 +9,8 @@ import kotlinx.coroutines.tasks.await
 
 object FoodTruckDataManager {
 
-    val foodtrucks = mutableListOf<FoodTruck>()
-
-    init {
-        getFoodTrucksFromDB()
-    }
-
-    private fun getFoodTrucksFromDB() {
+    fun getFoodTrucksFromDB(): MutableList<FoodTruck> {
+        val foodtrucksFromDB = mutableListOf<FoodTruck>()
 
         runBlocking {
             val itemsFromDb: List<FoodTruck> = db.collectionGroup("Items")
@@ -36,12 +31,13 @@ object FoodTruckDataManager {
                         menu = itemDocument.getString("menu") ?: "Food truck menus not available"
                     )
                 }
-            foodtrucks.addAll(itemsFromDb)
+            foodtrucksFromDB.addAll(itemsFromDb)
         }
+        return foodtrucksFromDB
     }
 
     fun searchFoodTrucks(foodType: String): List<FoodTruck> {
-        val foodTrucks = foodtrucks // eller  createMockData()
+        val foodTrucks = getFoodTrucksFromDB()
         if (foodType == "All Food") {
             return foodTrucks
         } else {

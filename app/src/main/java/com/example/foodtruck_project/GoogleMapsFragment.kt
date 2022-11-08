@@ -29,7 +29,7 @@ class GoogleMapsFragment : Fragment() {
          */
 
 
-        for (foodtruck in FoodTruckDataManager.foodtrucks) {
+        for (foodtruck in FoodTruckDataManager.getFoodTrucksFromDB()) {
             val currentFoodTruck = LatLng(foodtruck.latitude, foodtruck.longitude)
             googleMap.addMarker(
                 MarkerOptions().position(currentFoodTruck).title("${foodtruck.name}")
@@ -40,7 +40,7 @@ class GoogleMapsFragment : Fragment() {
         googleMap.addMarker(MarkerOptions().position(currentLocation).title("Din plats"))
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 15f))
 
-        for (foodtruck in FoodTruckDataManager.foodtrucks) {
+        for (foodtruck in FoodTruckDataManager.getFoodTrucksFromDB()) {
 
             if (foodtruck.showMe) {
                 googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(foodtruck.latitude, foodtruck.longitude), 17f))
