@@ -19,8 +19,6 @@ import java.time.format.DateTimeFormatter
 
 class ProfileActivity : AppCompatActivity() {
 
-    //Hej hopp testing testing
-
     lateinit var nameView: TextView
     lateinit var openHoursView: TextView
     lateinit var latitudeView: TextView
@@ -61,7 +59,7 @@ class ProfileActivity : AppCompatActivity() {
 
             if (user != null) {
 
-                database.collection("users").document(user.uid).collection("Items").add(item)
+                database.collection("users").document(user.uid).set(item)
                     .addOnCompleteListener {
                         Log.d("!!!", "add item, ${user}")
                     }
@@ -99,7 +97,7 @@ class ProfileActivity : AppCompatActivity() {
 
             val docRef = db.collection("users")
                 .document(user.uid)
-                .collection("Items")
+                .collection("users")
                 .orderBy("date", Query.Direction.DESCENDING)
                 .limit(1)
             Log.d("sås", "$docRef")
