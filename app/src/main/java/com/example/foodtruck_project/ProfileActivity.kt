@@ -19,6 +19,8 @@ import java.time.format.DateTimeFormatter
 
 class ProfileActivity : AppCompatActivity() {
 
+    //Hej hopp testing testing
+
     lateinit var nameView: TextView
     lateinit var openHoursView: TextView
     lateinit var latitudeView: TextView
