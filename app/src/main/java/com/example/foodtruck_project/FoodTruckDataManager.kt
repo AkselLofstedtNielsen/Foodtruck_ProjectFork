@@ -18,7 +18,7 @@ object FoodTruckDataManager {
     private fun getFoodTrucksFromDB() {
 
         runBlocking {
-            val itemsFromDb: List<FoodTruck> = db.collectionGroup("Items")
+            val itemsFromDb: List<FoodTruck> = db.collection("users")
                 .get()
                 .await()
                 .documents

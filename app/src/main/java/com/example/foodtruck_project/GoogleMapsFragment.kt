@@ -38,19 +38,19 @@ class GoogleMapsFragment : Fragment() {
 
         val currentLocation = LatLng(59.31118, 18.03002)
         googleMap.addMarker(MarkerOptions().position(currentLocation).title("Din plats"))
-        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 15f))
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 13f))
 
         for (foodtruck in FoodTruckDataManager.foodtrucks) {
 
             if (foodtruck.showMe) {
-                googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(foodtruck.latitude, foodtruck.longitude), 17f))
+                googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng(foodtruck.latitude, foodtruck.longitude), 13f))
                 foodtruck.showMe = false
             }
         }
 
 
 
-        googleMap.setOnMarkerClickListener { // Här ska man visa upp foodtrucken vars pin är tryckt på
+        /*googleMap.setOnMarkerClickListener { // Här ska man visa upp foodtrucken vars pin är tryckt på
             //atm läggs bara en pin till för att visa på funktion
 
 
@@ -59,7 +59,7 @@ class GoogleMapsFragment : Fragment() {
             val yourLocation = LatLng(59.31037749894223, 18.025368727268727)
             googleMap.addMarker(MarkerOptions().position(yourLocation).title("Du klickade på en marker"))
             false
-        }
+        }*/
     }
 
     override fun onCreateView(
