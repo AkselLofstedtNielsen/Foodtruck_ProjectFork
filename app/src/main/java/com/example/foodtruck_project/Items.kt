@@ -15,12 +15,14 @@ data class Items (@DocumentId var DocumentId : String? = null,
                   var truck : Boolean? = false,
                   var menu: String? = null
 )
-
-/*{
+/*
+{
     constructor(): this(null)
 }
 
  */
+
+
 
 
 
