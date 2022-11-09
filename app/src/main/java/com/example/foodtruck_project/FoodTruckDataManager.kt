@@ -41,13 +41,13 @@ object FoodTruckDataManager {
 
     fun searchFoodTrucks(foodType: String): List<FoodTruck> {
         val foodTrucks = foodtrucks
-        if (foodType == "All Food") {
-            return foodTrucks
+        return if (foodType == "All Food") {
+            foodTrucks
         } else {
             val filteredFoodTrucks = foodTrucks.filter { foodTruck ->
                 foodTruck.category == foodType
             }
-            return filteredFoodTrucks
+            filteredFoodTrucks
         }
     }
 }

@@ -34,19 +34,13 @@ class EditProfileActivity : AppCompatActivity() {
         openHoursEditText.setText(openHours)
 
         latitudeEditText = findViewById(R.id.latitudeEditText)
-        latitudeEditText.setText(latitude)
+        latitudeEditText.setText(latitude.toString())
 
         longitudeEditText = findViewById(R.id.longitudeEditText)
-        longitudeEditText.setText(longitude)
+        longitudeEditText.setText(longitude.toString())
 
         menuEditText = findViewById(R.id.menuEditText)
-        menuEditText.setText(menu)
-
-//        nameEditText.text.clear()
-//        openHoursEditText.text.clear()
-//        latitudeEditText.text.clear()
-//        longitudeEditText.text.clear()
-//        menuEditText.text = ""
+        menuEditText.text = menu
 
         val backButton = findViewById<ImageButton>(R.id.backButton)
         backButton.setOnClickListener{
