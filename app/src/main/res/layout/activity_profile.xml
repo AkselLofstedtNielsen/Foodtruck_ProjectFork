@@ -64,7 +64,7 @@
         android:layout_marginStart="25dp"
         android:layout_marginTop="6dp"
         android:layout_marginEnd="28dp"
-        android:text="Mån 11-19 Tis 11-19 Ons 11-21 Tors 11-19 Fre 11-22 Lör 10-16 Sön Stängt"
+        android:text="Mån-Fre 11-17 Lör 10-15"
         app:layout_constraintEnd_toStartOf="@+id/foodtruckImageView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView13" />
@@ -165,7 +165,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.082"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/menuTextView16" />
+        app:layout_constraintTop_toBottomOf="@+id/menuTextView" />
 
     <Button
         android:id="@+id/logoutButton"
@@ -181,7 +181,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/menuTextView16"
+        android:id="@+id/menuTextView"
         android:layout_width="323dp"
         android:layout_height="78dp"
         android:layout_marginTop="6dp"

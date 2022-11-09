@@ -10,11 +10,8 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import java.time.Instant
-import java.time.format.DateTimeFormatter
 
 
 class ProfileActivity : AppCompatActivity() {
@@ -48,8 +45,7 @@ class ProfileActivity : AppCompatActivity() {
                         latitude = (latitudeView.text as String).toDouble(),
                         longitude = (longitudeView.text as String).toDouble(),
                         category = categoryView.text.toString(),
-                        date = DateTimeFormatter.ISO_INSTANT.format(Instant.now()),
-                        menu = menuTextView.text.toString(),
+                        menu = menuTextView.text.toString()
                     )
                 } else {
                     TODO("VERSION.SDK_INT < O")
@@ -83,70 +79,31 @@ class ProfileActivity : AppCompatActivity() {
         longitudeView = findViewById(R.id.longitudeView)
         latitudeView = findViewById(R.id.latitudeView)
         categoryView = findViewById(R.id.categoryView)
-        menuTextView = findViewById(R.id.menuTextView16)
+        menuTextView = findViewById(R.id.menuTextView)
 
-        if (user == null) {
-            nameView.text = ""
-            openHoursView.text = ""
-            latitudeView.text = ""
-            longitudeView.text = ""
-            categoryView.text = ""
-            menuTextView.text = ""
+        if (user != null) {
 
-        } else if (user != null) {
-
-            val docRef = db.collection("users")
+            db.collection("users")
                 .document(user.uid)
-                .collection("users")
-                .orderBy("date", Query.Direction.DESCENDING)
-                .limit(1)
-            Log.d("sås", "$docRef")
+                .get()
+                .addOnSuccessListener { document ->
 
-            if (docRef == null) {
-                nameView.text = ""
-                openHoursView.text = ""
-                latitudeView.text = ""
-                longitudeView.text = ""
-                categoryView.text = ""
-                menuTextView.text = ""
-            } else {
+                    if (document != null) {
 
-                docRef.get()
-                    .addOnSuccessListener { document ->
+                        nameView.text = document.getString("name")
+                        openHoursView.text = document.getString("openHours")
+                        latitudeView.text = document.getDouble("latitude").toString()
+                        longitudeView.text = document.getDouble("longitude").toString()
+                        categoryView.text = document.getString("category")
+                        menuTextView.text = document.getString("menu")
 
-                        if (document != null) {
-                            val item = document.toObjects(Items::class.java)
-                            Log.d("sås", "$item")
-                            if (item.isNotEmpty()) {
-
-                                val name = item[0].name
-                                val openHours = item[0].openHours
-                                val latitude = item[0].latitude
-                                val longitude = item[0].longitude
-                                val category = item[0].category
-                                val menu = item[0].menu
-                                Log.d(
-                                    "profil",
-                                    "$name, $openHours, $latitude, $longitude, $category"
-                                )
-
-                                nameView.text = name
-                                openHoursView.text = openHours
-                                latitudeView.text = latitude.toString()
-                                longitudeView.text = longitude.toString()
-                                categoryView.text = category
-                                menuTextView.text = menu
-                            }
-
-                        } else {
-                            Log.d("!!!", "No such document")
-
-                        }
+                    } else {
+                        Log.d("!!!", "No such document")
                     }
-                    .addOnFailureListener { exception ->
-                        Log.d("!!!", "get failed with ", exception)
-                    }
-            }
+                }
+                .addOnFailureListener { exception ->
+                    Log.d("!!!", "get failed with ", exception)
+                }
         }
 
 
@@ -170,6 +127,7 @@ class ProfileActivity : AppCompatActivity() {
         }
     }
 
+
     fun edit() {
 
         val intent = Intent(this, EditProfileActivity::class.java)
@@ -182,8 +140,9 @@ class ProfileActivity : AppCompatActivity() {
         getContent.launch(intent)
 
     }
-
 }
+
+
 
 
 
