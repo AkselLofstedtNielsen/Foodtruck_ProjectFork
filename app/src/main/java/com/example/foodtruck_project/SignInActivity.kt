@@ -1,8 +1,11 @@
 package com.example.foodtruck_project
 
 import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import android.widget.TextView
 import android.widget.Toast
 import com.example.foodtruck_project.*
 import com.example.foodtruck_project.databinding.ActivitySignInBinding
@@ -16,12 +19,16 @@ class SignInActivity : AppCompatActivity() {
     private lateinit var firebaseAuth: FirebaseAuth
     lateinit var navigationMenu : BottomNavigationView
 
+    lateinit var havingP : TextView
+
 
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         auth = FirebaseAuth.getInstance()
+
+
 
         val user = auth.currentUser
 
@@ -94,6 +101,41 @@ class SignInActivity : AppCompatActivity() {
             }
             true
         }
+
+
+
+
+      /*  myView!!.havingP.setOnClickListener {
+            val intent = Intent().apply {
+                action = Intent.ACTION_SEND
+                data = Uri.parse("mailto:")
+                type = "text/plain"
+                putExtra(Intent.EXTRA_EMAIL, "to@email.com")
+                putExtra(Intent.EXTRA_SUBJECT, "Subject of Email")
+            }
+            if (intent.resolveActivity(activity!!.packageManager) != null) {
+                intent.setPackage("com.google.android.gm")
+                startActivity(intent)
+            } else {
+                Log.d(TAG, "No app available to send email.")
+            }
+        } */
+
+
+
+
+        havingP = findViewById(R.id.havingP)
+
+
+        havingP.setOnClickListener {
+            val emailIntent = Intent(Intent.ACTION_SENDTO,
+            Uri.fromParts("mailto", "tecnicalSupport@email.com", null))
+
+            startActivity(Intent.createChooser(emailIntent,"Send email"))
+        }
+
+
+
 
     }
 

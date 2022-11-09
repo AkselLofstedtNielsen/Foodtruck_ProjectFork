@@ -1,7 +1,9 @@
 package com.example.foodtruck_project
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.foodtruck_project.databinding.ActivitySignUpBinding
@@ -13,6 +15,7 @@ class SignUpActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySignUpBinding
     private lateinit var firebaseAuth: FirebaseAuth
     lateinit var navigationMenu : BottomNavigationView
+    lateinit var havingP2 : TextView
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -76,6 +79,23 @@ class SignUpActivity : AppCompatActivity() {
             }
             true
         }
+
+
+        havingP2 = findViewById(R.id.havingP2)
+
+
+        havingP2.setOnClickListener {
+            val emailIntent = Intent(Intent.ACTION_SENDTO,
+                Uri.fromParts("mailto", "tecnicalSupport@email.com", null))
+
+            startActivity(Intent.createChooser(emailIntent,"Send email"))
+        }
+
+
+
+
+
+
 
     }
 /*    private fun replaceFragment(fragment: Fragment) {
