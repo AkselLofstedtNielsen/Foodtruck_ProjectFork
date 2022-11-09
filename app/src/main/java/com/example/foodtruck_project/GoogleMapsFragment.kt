@@ -1,5 +1,6 @@
 package com.example.foodtruck_project
 
+import android.annotation.SuppressLint
 import androidx.fragment.app.Fragment
 
 import android.os.Bundle
@@ -16,8 +17,10 @@ import com.google.android.gms.maps.model.MarkerOptions
 
 class GoogleMapsFragment : Fragment() {
 
-
+    @SuppressLint("MissingPermission")
     private val callback = OnMapReadyCallback { googleMap ->
+        googleMap.isMyLocationEnabled = true
+
         /**
          * Manipulates the map once available.
          * This callback is triggered when the map is ready to be used.
