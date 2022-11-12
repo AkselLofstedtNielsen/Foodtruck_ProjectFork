@@ -9,6 +9,8 @@ import android.widget.ImageButton
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.tasks.await
 
 class FoodTruckListActivity : AppCompatActivity() {
 
@@ -16,6 +18,12 @@ class FoodTruckListActivity : AppCompatActivity() {
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_foodtruck_list)
+
+
+
+
+
+
 
         var backButton = findViewById<ImageButton>(R.id.backButton)
         backButton.setOnClickListener {

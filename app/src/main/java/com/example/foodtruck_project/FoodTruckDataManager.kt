@@ -1,19 +1,40 @@
 package com.example.foodtruck_project
 
+import android.text.method.TextKeyListener.clear
 import android.util.Log
+import com.google.firebase.database.core.RepoManager.clear
 import com.google.firebase.firestore.Query
 import kotlinx.coroutines.*
 import com.google.firebase.firestore.DocumentSnapshot
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.tasks.await
+import java.util.*
 
 object FoodTruckDataManager {
 
     val foodtrucks = mutableListOf<FoodTruck>()
 
+
+
+
     init {
-        getFoodTrucksFromDB()
+       getFoodTrucksFromDB()
     }
+
+
+     fun main() {
+        Timer().scheduleAtFixedRate( object : TimerTask() {
+            override fun run () {
+                getFoodTrucksFromDB()
+            }
+        }, 0, 5000)
+    }
+
+    init {
+        main()
+    }
+
+
 
     private fun getFoodTrucksFromDB() {
 
@@ -35,6 +56,7 @@ object FoodTruckDataManager {
                         menu = itemDocument.getString("menu") ?: "Food truck menus not available"
                     )
                 }
+            foodtrucks.clear()
             foodtrucks.addAll(itemsFromDb)
         }
     }
