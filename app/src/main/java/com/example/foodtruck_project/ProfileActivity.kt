@@ -51,10 +51,11 @@ class ProfileActivity : AppCompatActivity() {
                     TODO("VERSION.SDK_INT < O")
                 }
 
+            //firebase auth, skickar nuvarande användare db document users som är foodtruckprofilen
+            //om man vill lägga till något nytt, tex kordinater eller meny
             val user = auth.currentUser
 
             if (user != null) {
-
                 database.collection("users").document(user.uid).set(item)
                     .addOnCompleteListener {
                         Log.d("!!!", "add item, ${user}")
@@ -69,9 +70,7 @@ class ProfileActivity : AppCompatActivity() {
         setContentView(R.layout.activity_profile)
 
         database = Firebase.firestore
-
         auth = Firebase.auth
-
         val user = auth.currentUser
 
         nameView = findViewById(R.id.nameView)
@@ -81,8 +80,8 @@ class ProfileActivity : AppCompatActivity() {
         categoryView = findViewById(R.id.categoryView)
         menuTextView = findViewById(R.id.menuTextView)
 
-        if (user != null) {
 
+        if (user != null) {
             db.collection("users")
                 .document(user.uid)
                 .get()
@@ -118,6 +117,7 @@ class ProfileActivity : AppCompatActivity() {
             finish()
         }
 
+        //firebase logout för att logga ut ur sin profil.
         logout = findViewById(R.id.logoutButton)
         logout.setOnClickListener {
             Firebase.auth.signOut()

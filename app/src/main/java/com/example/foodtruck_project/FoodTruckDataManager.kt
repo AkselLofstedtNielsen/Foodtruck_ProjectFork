@@ -14,14 +14,12 @@ object FoodTruckDataManager {
 
     val foodtrucks = mutableListOf<FoodTruck>()
 
-
-
-
     init {
        getFoodTrucksFromDB()
     }
 
-
+    //en funktion som uppdaterar med interval som hämtar funktion som hämtar ner data via firebase
+    //så att man kan få uppdatering direkt i recycleviewen för foodtrucklistorna.
      fun main() {
         Timer().scheduleAtFixedRate( object : TimerTask() {
             override fun run () {
@@ -35,7 +33,8 @@ object FoodTruckDataManager {
     }
 
 
-
+    // funktion som hämtar hem foodtruckprofilernas data från firebase
+    //
     private fun getFoodTrucksFromDB() {
 
         runBlocking {
