@@ -11,6 +11,7 @@ class StartPageActivity : AppCompatActivity() {
         setContentView(R.layout.activity_start_page)
 
         val startPage = findViewById<ConstraintLayout>(R.id.startPage)
+        //Startpage: Image (logo) press anywhere to go to main
 
         startPage.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)

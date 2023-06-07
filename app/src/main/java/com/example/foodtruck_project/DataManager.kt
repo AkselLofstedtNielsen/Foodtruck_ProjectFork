@@ -13,8 +13,6 @@ class DataManager {
         allCategories.add(Category("Italian", R.drawable.italian_food_category) )
         allCategories.add(Category("Mexican", R.drawable.mexican_food_category) )
 
-
-
         return allCategories
     }
 }

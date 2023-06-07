@@ -3,7 +3,7 @@ package com.example.foodtruck_project
 import com.google.type.LatLng
 
 data class FoodTruck(
-
+    //Data class for a FoodTruck item
     var name: String,
     var openHours: String,
     var latitude: Double,
