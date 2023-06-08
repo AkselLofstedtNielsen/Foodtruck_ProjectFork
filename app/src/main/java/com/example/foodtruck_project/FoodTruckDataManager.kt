@@ -1,8 +1,6 @@
 package com.example.foodtruck_project
 
-import android.text.method.TextKeyListener.clear
 import android.util.Log
-import com.google.firebase.database.core.RepoManager.clear
 import com.google.firebase.firestore.Query
 import kotlinx.coroutines.*
 import com.google.firebase.firestore.DocumentSnapshot
@@ -11,39 +9,30 @@ import kotlinx.coroutines.tasks.await
 import java.util.*
 
 object FoodTruckDataManager {
-
     val foodtrucks = mutableListOf<FoodTruck>()
 
     init {
-       getFoodTrucksFromDB()
+        getFoodTrucksFromDB()
+        main()
     }
 
-    //en funktion som uppdaterar med interval som hämtar funktion som hämtar ner data via firebase
-    //så att man kan få uppdatering direkt i recycleviewen för foodtrucklistorna.
-     fun main() {
-        Timer().scheduleAtFixedRate( object : TimerTask() {
-            override fun run () {
+    // Function to continuously update the food truck data at regular intervals
+    private fun main() {
+        Timer().scheduleAtFixedRate(object : TimerTask() {
+            override fun run() {
                 getFoodTrucksFromDB()
             }
         }, 0, 5000)
     }
 
-    init {
-        main()
-    }
-
-
-    // funktion som hämtar hem foodtruckprofilernas data från firebase
-    //
+    // Function to retrieve food truck data from the database
     private fun getFoodTrucksFromDB() {
-
         runBlocking {
             val itemsFromDb: List<FoodTruck> = db.collection("users")
                 .get()
                 .await()
                 .documents
                 .map { itemDocument ->
-
                     FoodTruck(
                         name = itemDocument.getString("name") ?: "Food truck name not available",
                         openHours = itemDocument.getString("openHours")
@@ -51,7 +40,7 @@ object FoodTruckDataManager {
                         latitude = itemDocument.getDouble("latitude") ?: 0.0,
                         longitude = itemDocument.getDouble("longitude") ?: 0.0,
                         category = itemDocument.getString("category")
-                            ?: "Food truck categoy not available",
+                            ?: "Food truck category not available",
                         menu = itemDocument.getString("menu") ?: "Food truck menus not available"
                     )
                 }
@@ -60,6 +49,7 @@ object FoodTruckDataManager {
         }
     }
 
+    // Function to search for food trucks based on food type
     fun searchFoodTrucks(foodType: String): List<FoodTruck> {
         val foodTrucks = foodtrucks
         return if (foodType == "All Food") {
@@ -72,10 +62,3 @@ object FoodTruckDataManager {
         }
     }
 }
-
-
-
-
-
-
-

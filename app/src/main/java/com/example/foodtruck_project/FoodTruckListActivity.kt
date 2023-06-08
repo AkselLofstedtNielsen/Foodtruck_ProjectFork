@@ -19,19 +19,13 @@ class FoodTruckListActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_foodtruck_list)
 
-
-
-
-
-
-
+        //Set up back button
         var backButton = findViewById<ImageButton>(R.id.backButton)
         backButton.setOnClickListener {
             finish()
         }
 
         var foodTruckRecyclerView = findViewById<RecyclerView>(R.id.truckRecycleView)
-
         foodTruckRecyclerView.layoutManager = LinearLayoutManager(this)
 
         var selectedCategory: String = intent.getStringExtra("foodtype").toString()

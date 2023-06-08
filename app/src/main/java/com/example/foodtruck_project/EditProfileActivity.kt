@@ -8,18 +8,18 @@ import androidx.appcompat.app.AppCompatActivity
 
 class EditProfileActivity : AppCompatActivity() {
 
-    lateinit var nameEditText: EditText
-    lateinit var openHoursEditText: EditText
-    lateinit var latitudeEditText: EditText
-    lateinit var longitudeEditText: EditText
-    lateinit var categorySpinner: Spinner
-    lateinit var menuEditText: TextView
-
+    private lateinit var nameEditText: EditText
+    private lateinit var openHoursEditText: EditText
+    private lateinit var latitudeEditText: EditText
+    private lateinit var longitudeEditText: EditText
+    private lateinit var categorySpinner: Spinner
+    private lateinit var menuEditText: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit_profile)
 
+        // Retrieve data passed from the previous activity
         val foodTruckName = intent.getStringExtra("foodTruckName")
         val openHours = intent.getStringExtra("openHours")
         val latitude = intent.getStringExtra("latitude")
@@ -27,6 +27,7 @@ class EditProfileActivity : AppCompatActivity() {
         val category = intent.getStringExtra("category")
         val menu = intent.getStringExtra("menu")
 
+        // Initialize views and set their values
         nameEditText = findViewById(R.id.nameEditText)
         nameEditText.setText(foodTruckName)
 
@@ -42,15 +43,19 @@ class EditProfileActivity : AppCompatActivity() {
         menuEditText = findViewById(R.id.menuEditText)
         menuEditText.text = menu
 
+        // Set up back button
         val backButton = findViewById<ImageButton>(R.id.backButton)
-        backButton.setOnClickListener{
+        backButton.setOnClickListener {
             finish()
         }
 
+        // Set up save button
         val saveButton = findViewById<Button>(R.id.editButton)
         saveButton.setOnClickListener {
             saveChanges()
         }
+
+        // Set up category spinner
         val arraySpinner = arrayOf(
             "American", "Asian", "Fast food", "Indian", "Italian", "Mexican"
         )
@@ -61,14 +66,13 @@ class EditProfileActivity : AppCompatActivity() {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         categorySpinner.adapter = adapter
 
+        // Set the selected item in the spinner based on the category value
         val spinnerPosition: Int = adapter.getPosition(category)
-
         categorySpinner.setSelection(spinnerPosition)
-
-
     }
 
     private fun saveChanges() {
+        // Send the changes back to the previous activity
 
         val intent = Intent()
         intent.putExtra("foodTruckName", nameEditText.text.toString())
@@ -76,11 +80,7 @@ class EditProfileActivity : AppCompatActivity() {
         intent.putExtra("latitude", latitudeEditText.text.toString())
         intent.putExtra("longitude", longitudeEditText.text.toString())
         intent.putExtra("menu", menuEditText.text.toString())
-       setResult(Activity.RESULT_OK, intent)
-
-
-        var category: String = categorySpinner.selectedItem.toString()
-        intent.putExtra("category", category)
+        intent.putExtra("category", categorySpinner.selectedItem.toString())
         setResult(Activity.RESULT_OK, intent)
         finish()
     }
